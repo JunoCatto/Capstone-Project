@@ -1,5 +1,6 @@
 import express from "express";
 import "dotenv/config";
+import mongoose from "./dbconnect.js";
 
 const PORT = process.env.PORT || 5000;
 
