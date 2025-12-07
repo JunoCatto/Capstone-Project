@@ -18,11 +18,10 @@ export const userSchema = new Schema({
     trim: true,
     required: true,
   },
-  // profilePic: {
-  //   type: String,
-  //   trim: true,
-  //   required: true,
-  // },
+  profilePic: {
+    data: Buffer,
+    contentType: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
