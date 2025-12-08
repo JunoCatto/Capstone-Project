@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 export default function Register() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -20,13 +20,13 @@ export default function Register() {
     });
     const data = await response.json();
     if (data.result !== "success") return console.log("User creation failed");
-    Navigate("/login");
+    navigate("/login");
   };
 
   return (
     <div>
       <h1>Register</h1>
-      <form onSubmit={handleRegister}>
+      <form name="register" onSubmit={handleRegister}>
         <input
           type="text"
           placeholder="userName"

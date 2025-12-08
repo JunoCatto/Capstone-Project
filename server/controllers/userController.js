@@ -22,7 +22,7 @@ export const createUser = async (req, res) => {
     };
     const savedUser = await user.save();
     res.send({ result: "success", data: savedUser });
-    console.log("user created successfully, user id is", savedUser._id);
+    console.log("user created successfully:", savedUser._id);
   } catch (err) {
     res.send({ result: "failed", data: err });
     console.log(err);
@@ -32,8 +32,8 @@ export const createUser = async (req, res) => {
 // login user -> host/api/user/login
 export const loginUser = async (req, res) => {
   try {
-    const { emailId, password } = req.body;
-    const user = await Models.User.findOne({ emailId });
+    const { userName, password } = req.body;
+    const user = await Models.User.findOne({ userName });
     if (!user) {
       return res.send({ result: "failed", data: "user does not exist" });
     }
