@@ -6,6 +6,7 @@ export const userSchema = new Schema({
     type: String,
     trim: true,
     required: true,
+    unique: true,
   },
   password: {
     // password should be hashed (is not in this exmaple code)
@@ -16,7 +17,9 @@ export const userSchema = new Schema({
   emailId: {
     type: String,
     trim: true,
-    required: true,
+    unique: true,
+    required: false,
+    sparse: true,
   },
   profilePic: {
     data: Buffer,
