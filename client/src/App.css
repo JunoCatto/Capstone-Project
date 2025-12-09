@@ -1,19 +1,58 @@
-
 @media (max-width: 1300px) {
   .sidebar {
     max-width: 100px !important;
   }
-
 }
 
 /* Hides trends sidebar on mobile or when the window is small */
 @media (max-width: 1000px) {
-
 .trend-sidebar {
   display:none;
 }
 }
 
+/* Auth Screens */ 
+
+.maincontainer {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction:column;
+  align-items: center;
+  justify-content: center;
+  width: 600px;
+  height: 650px;
+  background-color: black;
+  border-radius: 20px;
+} 
+ .container form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  padding: 10px;
+  border-radius: inherit;
+  gap:20px;
+}
+.container form input {
+  font-size: 110%;
+  border-radius: 20px;
+  padding:10px;
+  margin:10px;
+}
+.container button {
+  border-radius: inherit;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+
+/* Side bars */
 .sidebar-btn {
   margin-bottom: 10px;
   padding:15px;
@@ -27,3 +66,4 @@
   background-color: rgba(0,0,0,50%)
 
 }
+

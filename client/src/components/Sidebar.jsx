@@ -1,24 +1,27 @@
 import { useNavigate } from "react-router";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const { logout } = useAuth();
   return (
     <div className="sidebar vh-100 w-25 border-end">
-      <button className="sidebar-btn w-100" onClick={() => navigate("/")}>
+      <a className="sidebar-btn w-100" href="/home">
         {" "}
         Home{" "}
-      </button>
-      <button className="sidebar-btn w-100" onClick={() => navigate("/about")}>
+      </a>
+      <a className="sidebar-btn w-100" href="/about">
         {" "}
         About{" "}
-      </button>
-      <button
-        className="sidebar-btn w-100"
-        onClick={() => navigate("/settings")}
-      >
+      </a>
+      <a className="sidebar-btn w-100" href="/settings">
         {" "}
         Settings{" "}
-      </button>
+      </a>
+      <a className="sidebar-btn w-100" onClick={() => logout()}>
+        {" "}
+        Log out{" "}
+      </a>
     </div>
   );
 }

@@ -3,9 +3,6 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router";
-// importing bootstrap css and js
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 // context
 import { AuthProvider } from "./context/authcontext.jsx";

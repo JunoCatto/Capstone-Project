@@ -1,21 +1,36 @@
 :root {
   --background-colour: #242424;
   --primary-text-colour: #ffffff;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
-  background-color: var(--background-colour) !important;
-  color: var(--primary-text-colour) !important;
+  background-color: var(--background-colour);
+  color: var(--primary-text-colour);
 }
 
 .nav-link {
-  color: var(--primary-text-colour) !important;
+  color: var(--primary-text-colour)
 }
 
 .nav-link:hover {
-  color: var(--primary-text-colour) !important;
+  color: var(--primary-text-colour) 
 }
 
 .nav-link.active {
-  color: var(--primary-text-colour) !important;
+  color: var(--primary-text-colour)
+}
+
+/* MUI input styling */
+.input .MuiInputBase-input {
+  color: white;
+}
+.input .MuiInputBase-input:-webkit-autofill{
+  -webkit-box-shadow: 0 0 0 150px inset RGBA(70, 90, 126, 0.4) !important;
+  -webkit-text-fill-color: white !important;
+}
+
+/* Sets label to grey */
+.input .MuiInputLabel-root {
+  color: grey;
 }
