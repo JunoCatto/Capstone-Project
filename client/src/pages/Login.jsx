@@ -1,44 +1,26 @@
 import { useState } from "react";
+import { useAuth } from "../hooks/useAuth.jsx";
 import { useNavigate } from "react-router";
-import { useContext } from "react";
 
-import { AuthContext } from "../context/authcontext.jsx";
-export default function Login() {
+const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const { setUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    const response = await fetch("http://localhost:5000/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userName: userName,
-        password: password,
-      }),
-    });
-    const data = await response.json();
-    if (data.result === "success") {
-      // save user for persistence
-      localStorage.setItem("user", data.data.userName);
-      // sets context for user
-      setUser(data.data.userName);
-      // add login confirmed
-      console.log($`{data.data.userName} has logged in.`);
-      navigate("/");
+    const response = await login(userName, password);
+    if (response.success) {
+      navigate("/home");
     } else {
-      return console.log("User login failed");
+      console.log("Login failed:", response.message);
     }
   };
 
   return (
     <div>
-      <h1>Login</h1>
+      <div>Login</div>
       <form name="login" onSubmit={handleLogin}>
         <input
           type="text"
@@ -56,4 +38,5 @@ export default function Login() {
       </form>
     </div>
   );
-}
+};
+export default Login;

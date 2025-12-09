@@ -41,6 +41,7 @@ export const loginUser = async (req, res) => {
       return res.send({ result: "failed", data: "incorrect password" });
     }
     res.send({ result: "success", data: user });
+    console.log(`user ${userName} signed in successfully`);
   } catch (err) {
     res.send({ result: "failed", data: err });
     console.log(err);

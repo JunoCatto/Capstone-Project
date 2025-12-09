@@ -1,26 +1,32 @@
 import { useState } from "react";
+import { useAuth } from "../hooks/useAuth.jsx";
 import { useNavigate } from "react-router";
 
-export default function Register() {
+const Register = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { register } = useAuth();
 
+  // style alerts properly
   const handleRegister = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userName: userName,
-        password: password,
-      }),
-    });
-    const data = await response.json();
-    if (data.result !== "success") return console.log("User creation failed");
-    navigate("/login");
+    if (!userName || !password) {
+      alert("Please fill both fields");
+      return;
+    }
+    if (password.length < 6) {
+      alert("Passwords must be at least 6 characters.");
+      // add more conditions here?
+      return;
+    }
+    const response = await register(userName, password);
+    if (response.success) {
+      navigate("/");
+    } else {
+      console.log("Registration failed:", response.message);
+      alert("That username is taken.");
+    }
   };
 
   return (
@@ -43,4 +49,6 @@ export default function Register() {
       </form>
     </div>
   );
-}
+};
+
+export default Register;
