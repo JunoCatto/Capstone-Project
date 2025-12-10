@@ -1,21 +1,36 @@
-import { createContext, useState } from "react";
+import { createContext, useReducer } from "react";
+import { authReducer, initialState } from "../reducers/authReducer";
 
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  // managing the user state for persistence
-  const [user, setUser] = useState(() => {
+  const [state, dispatch] = useReducer(authReducer, initialState);
+
+  // login function
+  const login = async (userName, password) => {
+    dispatch({ type: "AUTH_START" });
     try {
-      const storedUser = localStorage.getItem("user");
-      // if user is found, return it as a json object
-      return storedUser ? JSON.parse(storedUser) : null;
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userName,
+          password,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
+      const userData = data.data; // i.e. { userName, password }
+      dispatch({ type: "AUTH_SUCCESS", payload: userData });
+      localStorage.setItem("user", JSON.stringify(userData));
     } catch (err) {
-      // if error, removes the current user.
-      console.error("Invalid user data", err);
-      localStorage.removeItem("user");
-      return null;
+      return dispatch({ type: "AUTH_FAILURE", payload: err.message });
     }
-  });
+  };
 
   // register function
   const register = async (userName, password) => {
@@ -26,58 +41,36 @@ export const AuthProvider = ({ children }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userName: userName,
-          password: password,
+          userName,
+          password,
         }),
       });
       const data = await response.json();
-      if (data.result === "success") {
-        const userData = data.data; // i.e. { userName, password }
-        setUser(userData);
-        localStorage.setItem("user", JSON.stringify(userData));
-        return { success: true };
-      } else {
-        return { success: false, message: data.data };
+      if (!response.ok) {
+        throw new Error(data.message);
       }
+      dispatch({ type: "AUTH_START", payload: null }); // does not dispatch AUTH_SUCCESS as that would log the user in immediately.
     } catch (err) {
-      return { success: false, message: err };
-    }
-  };
-
-  // login function
-  const login = async (userName, password) => {
-    try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userName: userName,
-          password: password,
-        }),
-      });
-      const data = await response.json();
-      if (data.result === "success") {
-        const userData = data.data; // i.e. { userName, password }
-        setUser(userData);
-        localStorage.setItem("user", JSON.stringify(userData));
-        return { success: true };
-      } else {
-        return { success: false, message: data.data };
-      }
-    } catch (err) {
-      return { success: false, message: err };
+      return dispatch({ type: "AUTH_FAILURE", payload: err.message });
     }
   };
 
   // logout, removes user from storage and sets user to null
   const logout = () => {
-    setUser(null);
     localStorage.removeItem("user");
+    dispatch({ type: "LOGOUT" });
   };
   return (
-    <AuthContext.Provider value={{ user, login, logout, register }}>
+    <AuthContext.Provider
+      value={{
+        user: state.user,
+        loading: state.loading,
+        error: state.error,
+        login,
+        logout,
+        register,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

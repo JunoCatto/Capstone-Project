@@ -21,10 +21,12 @@ export const createUser = async (req, res) => {
       contentType: "image/png",
     };
     const savedUser = await user.save();
-    res.send({ result: "success", data: savedUser });
-    console.log("user created successfully:", savedUser._id);
+    res.status(200).json({ data: savedUser });
+    console.log(
+      `User ${savedUser.userName} created successfully: ${savedUser._id}`
+    );
   } catch (err) {
-    res.send({ result: "failed", data: err });
+    res.status(500).json({ data: err });
     console.log(err);
   }
 };
@@ -35,15 +37,15 @@ export const loginUser = async (req, res) => {
     const { userName, password } = req.body;
     const user = await Models.User.findOne({ userName });
     if (!user) {
-      return res.send({ result: "failed", data: "user does not exist" });
+      return res.status(400).json({ message: "That user does not exist" });
     }
     if (user.password !== password) {
-      return res.send({ result: "failed", data: "incorrect password" });
+      return res.status(400).json({ message: "Incorrect password" });
     }
-    res.send({ result: "success", data: user });
-    console.log(`user ${userName} signed in successfully`);
+    res.status(200).json({ data: user });
+    console.log(`User ${userName} signed in successfully`);
   } catch (err) {
-    res.send({ result: "failed", data: err });
+    res.status(500).json({ data: err });
     console.log(err);
   }
 };
@@ -53,11 +55,11 @@ export const findUserById = async (req, res) => {
   try {
     const user = await Models.User.findById(req.params.id);
     if (!user) {
-      return res.send({ result: "failed", data: "user does not exist" });
+      return res.status(400).json({ data: "User does not exist" });
     }
-    res.send({ result: "success", data: user });
+    res.status(200).json({ data: user });
   } catch (err) {
-    res.send({ result: "failed", data: err });
+    res.status(500).json({ data: err });
     console.log(err);
   }
 };
@@ -66,9 +68,9 @@ export const findUserById = async (req, res) => {
 export const findAllUsers = async (req, res) => {
   try {
     const user = await Models.User.Find();
-    res.send({ result: "success", data: user });
+    res.status(200).json({ data: user });
   } catch (err) {
-    res.send({ result: "failed", data: err });
+    res.status(500).json({ data: err });
     console.log(err);
   }
 };

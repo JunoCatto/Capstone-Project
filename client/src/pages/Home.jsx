@@ -1,4 +1,6 @@
-import Feed from "../components/feed.jsx";
+import Feed from "../components/Feed.jsx";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 
 export default function Home() {
   return (

@@ -8,9 +8,9 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(cors());
 
-// opening page
+// landing page
 app.get("/", (req, res) => {
-  res.json({ message: "Running mongodb server" });
+  res.status(200).json({ message: "Running mongodb server" });
 });
 
 // middlewares - routing - /api/*

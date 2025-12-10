@@ -1,27 +1,45 @@
-import { useNavigate } from "react-router";
 import { useAuth } from "../hooks/useAuth";
+import React from "react";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 export default function Sidebar() {
-  const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleOpen = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
-    <div className="sidebar vh-100 w-25 border-end">
-      <a className="sidebar-btn w-100" href="/home">
-        {" "}
-        Home{" "}
-      </a>
-      <a className="sidebar-btn w-100" href="/about">
-        {" "}
-        About{" "}
-      </a>
-      <a className="sidebar-btn w-100" href="/settings">
-        {" "}
-        Settings{" "}
-      </a>
-      <a className="sidebar-btn w-100" onClick={() => logout()}>
-        {" "}
-        Log out{" "}
-      </a>
+    <div className="sidebar">
+      <div>Home</div>
+      <div>About</div>
+      <div>Profile</div>
+      <div>
+        <Button variant="outlined" onClick={handleOpen}>
+          {user.userName}
+        </Button>
+        <Menu
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          slotsprops={{
+            paper: {
+              sx: {
+                width: "100%",
+              },
+            },
+          }}
+        >
+          <MenuItem onClick={handleClose}>Settings</MenuItem>
+          <MenuItem onClick={() => logout()}>Sign Out</MenuItem>
+        </Menu>
+      </div>
     </div>
   );
 }

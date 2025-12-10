@@ -19,8 +19,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const { login } = useAuth();
-  const [error, setError] = useState("");
+  const { login, loading, error } = useAuth();
 
   // Handling password visibility
   const handleClickShowPassword = () => {
@@ -33,14 +32,15 @@ const Login = () => {
     e.preventDefault();
   };
 
+  const handleNav = () => {
+    navigate("/register");
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    const response = await login(userName, password);
-    if (response.success) {
+    await login(userName, password);
+    if (!error) {
       navigate("/home");
-    } else {
-      console.log("Login failed:", response.message);
-      setError(response.message);
     }
   };
 
@@ -94,7 +94,9 @@ const Login = () => {
             {" "}
             Login{" "}
           </Button>{" "}
-          <Button variant="contained">Create an account</Button>
+          <Button variant="contained" onClick={handleNav}>
+            Create an account
+          </Button>
         </form>
       </div>
     </div>
