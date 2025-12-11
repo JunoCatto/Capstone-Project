@@ -25,6 +25,7 @@ export default function PostInput({ addImmediately }) {
               placeholder="What's on your mind?"
               multiline
               maxRows={4}
+              maxLength={280}
               fullWidth
               value={postText}
               onChange={(e) => {
@@ -32,12 +33,6 @@ export default function PostInput({ addImmediately }) {
               }}
               slotProps={{
                 input: {
-                  style: {
-                    color: "white",
-                    fontSize: "17px",
-                    lineHeight: "20px",
-                    borderBottom: "1px solid #2f3336",
-                  },
                   disableUnderline: "true",
                 },
               }}

@@ -3,14 +3,15 @@ export default function Feed({ posts, loading, error }) {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <>
-      <div>
-        {posts.map((post, index) => (
-          <div key={post._id || index}>
+    <div className="feed">
+      {posts.map((post, index) => (
+        <div className="feedPosts" key={post._id || index}>
+          <div className="feedInnerDiv">
             <p>{post.content}</p>
+            <span>{new Date(post.createdAt).toLocaleDateString()}</span>
           </div>
-        ))}
-      </div>
-    </>
+        </div>
+      ))}
+    </div>
   );
 }

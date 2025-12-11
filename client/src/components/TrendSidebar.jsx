@@ -1,6 +1,6 @@
 export default function TrendSidebar() {
   return (
-    <div className="trend-sidebar">
+    <div className="trendSidebar">
       <div> Trends</div>
     </div>
   );

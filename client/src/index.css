@@ -1,12 +1,18 @@
 :root {
   --background-colour: black;
-  --primary-text-colour: #ffffff;
+  --primary-text-colour: #e7e9ea;
   font-family: 'Roboto', sans-serif;
+  color-scheme: dark;
 }
 
-body {
+body, html {
   background-color: var(--background-colour);
   color: var(--primary-text-colour);
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-link {
@@ -21,31 +27,3 @@ body {
   color: var(--primary-text-colour)
 }
 
-/* MUI input styling */
-.input .MuiInputBase-input {
-  color: white;
-}
-
-.layout-container {
-  display: flex;
-  height: 100vh;
-  background-color: black;
-}
-
-
-.input {
-  background-color: #000; 
-  color: #fff; 
-  transition: background-color 5000s ease-in-out 0s; 
-}
-
-/* Sets label to grey */
-.input .MuiInputLabel-root {
-  color: grey;
-}
-
-.input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px #000 inset;
-  -webkit-text-fill-color: #fff;
-  transition: background-color 5000s ease-in-out 0s;
-}

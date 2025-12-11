@@ -27,9 +27,8 @@ export default function Home() {
   };
 
   return (
-    <div className="mainFeed">
+    <div className="feedPosts">
       <PostInput addImmediately={addImmediately} />
-      <h1>Home page!</h1>
       <Feed posts={posts} loading={loading} error={error} />
     </div>
   );

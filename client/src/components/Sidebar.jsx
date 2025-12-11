@@ -17,10 +17,10 @@ export default function Sidebar() {
 
   return (
     <div className="sidebar">
-      <div>Home</div>
-      <div>About</div>
-      <div>Profile</div>
-      <div>
+      <div className="sidebarButton">Home</div>
+      <div className="sidebarButton">About</div>
+      <div className="sidebarButton">Profile</div>
+      <div className="sidebarButton">
         <Button variant="outlined" onClick={handleOpen}>
           {user.userName}
         </Button>

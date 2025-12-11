@@ -1,61 +1,138 @@
-.sidebar {
+/* Global Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scrollbar-gutter: stable;
+}
+
+
+/* Main Containers */
+.appContainer {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.leftContainer {
+  width: 275px;
+  padding: 0 12px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items:center;
-  justify-content: space-evenly;
-  position: sticky;
-  left: 0;
-  top: 0;
-  width: 250px;
-  padding-top: 40px;
-  margin: 0 auto;
-  border-right: 1px solid #2f3336;
 }
 
-.sidebar div {
-  padding: 8px;
-  font-size: 24px;
-  display: block;
+
+/* Sidebar Styling */
+.sidebar {
+   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 12px 0;
+  gap: 4px;
+}
+.sidebarButton {
+   padding: 12px 24px;
+  border-radius: 9999px;
+  font-size: 20px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
+
+/* Main Content Container */
+.mainContainer {
+  display: flex;
+  max-width: 990px;
+  width: 100%;
+}
 main {
   flex: 1;
-  position: relative;
-  overflow-y: auto;
-}
-
-.trend-sidebar {
-  width: 300px;
-  position: sticky;
-  right: 0;
-  padding-top: 40px;
+  max-width: 600px;
+  min-width: 600px;
   border-left: 1px solid #2f3336;
+  border-right: 1px solid #2f3336;
+  min-height: 100vh;
 }
 
-@media (max-width: 1300px) {
-  .sidebar {
-    max-width: 100px !important;
-  }
+
+/* Feed Posts Container */
+.feedPosts {
+  width: 100%;
+}
+.feed {
+  width: 100%;
+}
+.feedPosts > .feedInnerDiv {
+  padding: 16px;
+  border-bottom: 1px solid #2f3336;
+  transition: background-color 0.2s;
+  cursor: pointer;
+  width: 100%;
+}
+.feedPosts > .feedInnerDiv:hover {
+  background-color: #0f0f0f;
+}
+.feedInnerDiv p {
+  font-size: 15px;
+  line-height: 20px;
+  color: #e7e9ea;
+  margin-bottom: 8px;
+  word-wrap: break-word;
+}
+.feedInnerDiv span {
+  font-size: 13px;
+  color: #71767b;
 }
 
-/* Hides trends sidebar on mobile or when the window is small */
-@media (max-width: 1000px) {
-.trend-sidebar {
-  display:none;
+
+/* Post Input */ 
+.postDiv {
+  border-bottom: 1px solid #2f3336;
+  padding: 16px;
 }
+/* Text field styling */
+.postInner .MuiInputBase-input {
+  color: #e7e9ea;
+  font-size: 20px;
+  line-height: 24px; 
+  padding-bottom: 12px;
+}
+/* button styling */
+.postInner .MuiButton-root:disabled {
+  border-color: gray;
+  color: gray;
+  opacity: 0.5
+}
+.postInner {
+  width: 100%;
 }
 
-/* Auth Screens */ 
 
-.maincontainer {
+/* Trend Sidebar */
+.trendSidebar {
+  width: 300px;
+  padding: 0 20px;
+  margin-left: 30px;
+}
+
+
+/* Auth Screens */
+.authContainer {
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-
-.container {
+.auth {
   display: flex;
   flex-wrap: wrap;
   flex-direction:column;
@@ -65,12 +142,7 @@ main {
   height: 650px;
   border-radius: 20px;
 } 
-@media (max-width: 600px) {
-  .container {
-    height: 100%
-  }
-}
- .container form {
+ .auth form {
   display: flex;
   flex-direction: column;
   width: 300px;
@@ -78,48 +150,62 @@ main {
   border-radius: inherit;
   gap:20px;
 }
-.container form input {
+.auth form input {
   font-size: 110%;
   border-radius: 20px;
   padding:10px;
   margin:10px;
 }
-.container button {
+.auth button {
   border-radius: inherit;
   padding: 10px;
   margin-top: 20px;
 }
 
-/* Side bars */
-.sidebar-btn {
-  margin-bottom: 10px;
-  padding:15px;
-  background-color: rgba(0,0,0,0);
-  color: white;
-  border: 0;
-  border-radius: 50px;
+/* MUI input styling */
+.input .MuiInputBase-input {
+  color: #e7e9ea;
+}
+.input {
+  background-color: #000; 
+  color: #e7e9ea ;
+  transition: background-color 5000s ease-in-out 0s; 
+}
+/* Sets label to grey */
+.input .MuiInputLabel-root {
+  color: grey;
+}
+.input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+  -webkit-text-fill-color: #e7e9ea;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
-.sidebar-btn:hover {
-  background-color: rgba(0,0,0,50%)
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+  .trendSidebar {
+    display: none;
+  }
 }
 
-/* .mainFeed {
-
-} */
-
-.postDiv {
-  display: flex;
-  justify-content: center;
-  position: sticky;       
-  top: 0;
-  border-bottom: 1px solid #2f3336;
-
-  padding: 10px;
-}
-.postInner {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 12px; 
+@media (max-width: 768px) {
+  .leftContainer {
+    width: 88px;
+  }
+  
+  .sidebarButton { /* Styling for icons */
+    padding: 12px;
+    justify-content: center;
+  }
+  
+  main {
+    max-width: 100%;
+  }
 }
 
+@media (max-width: 600px) {
+  .auth {
+    height: 100%
+  }
+}

@@ -50,8 +50,8 @@ const Register = () => {
   };
 
   return (
-    <div className="maincontainer">
-      <div className="container">
+    <div className="authContainer">
+      <div className="auth">
         <form name="login" onSubmit={handleRegister}>
           <h1>Register</h1>
           {/* Username */}
