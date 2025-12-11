@@ -9,7 +9,7 @@ export const userSchema = new Schema({
     unique: true,
   },
   password: {
-    // password should be hashed (is not in this exmaple code)
+    // password should be hashed (is not in this example code)
     type: String,
     trim: true,
     required: true,

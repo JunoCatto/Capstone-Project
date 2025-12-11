@@ -1,5 +1,3 @@
-import { useReducer } from "react";
-
 export const initialState = (() => {
   // managing the user state for persistence
   try {

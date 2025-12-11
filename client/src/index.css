@@ -1,5 +1,5 @@
 :root {
-  --background-colour: #242424;
+  --background-colour: black;
   --primary-text-colour: #ffffff;
   font-family: 'Roboto', sans-serif;
 }
@@ -27,17 +27,16 @@ body {
 }
 
 .layout-container {
-  display:flex;
-  flex-direction: row;
+  display: flex;
   height: 100vh;
-  width: 100%;
-  overflow: hidden;
+  background-color: black;
 }
 
+
 .input {
-  background-color: #000; /* normal background */
-  color: #fff; /* normal text color */
-  transition: background-color 5000s ease-in-out 0s; /* hack to keep autofill bg */
+  background-color: #000; 
+  color: #fff; 
+  transition: background-color 5000s ease-in-out 0s; 
 }
 
 /* Sets label to grey */

@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 // middlewares - routing - /api/*
 app.use(express.json());
 import routes from "./routes/index.js";
-app.use("/api", routes.router);
+app.use("/api", routes);
 
 // 404 error handler
 app.use((req, res) => {
