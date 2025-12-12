@@ -1,6 +1,6 @@
 const baseUrl = "http://localhost:5000/api";
 
-export const createPost = async (userId, content) => {
+export const createPost = async (user, content) => {
   try {
     const response = await fetch(`${baseUrl}/user/post`, {
       method: "POST",
@@ -8,30 +8,32 @@ export const createPost = async (userId, content) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userId,
+        userId: user._id,
+        userName: user.userName,
         content,
       }),
     });
-    if (!response.ok) {
-      throw new Error();
-    }
     const data = await response.json();
-    console.log(data.data);
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
     return data.data;
   } catch (err) {
-    throw new Error(err);
+    console.error("Error creating post", err);
+    throw err;
   }
 };
 
 export const getPosts = async () => {
   try {
     const response = await fetch(`${baseUrl}/posts`);
-    if (!response.ok) {
-      throw new Error();
-    }
     const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
     return data.data;
   } catch (err) {
-    throw new Error(err);
+    console.error("Error getting posts", err);
+    throw err;
   }
 };

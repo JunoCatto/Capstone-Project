@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 export const postSchema = new Schema({
+  author: {
+    type: String,
+    required: true,
+  },
   content: {
     type: String,
     required: true,

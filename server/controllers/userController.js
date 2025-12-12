@@ -26,8 +26,9 @@ export const createUser = async (req, res) => {
       `User ${savedUser.userName} created successfully: ${savedUser._id}`
     );
   } catch (err) {
-    res.status(500).json({ data: err });
-    console.log(err);
+    res
+      .status(500)
+      .json({ message: "Failed to create user", error: err.message });
   }
 };
 
@@ -45,8 +46,9 @@ export const loginUser = async (req, res) => {
     res.status(200).json({ data: user });
     console.log(`User ${userName} signed in successfully`);
   } catch (err) {
-    res.status(500).json({ data: err });
-    console.log(err);
+    res
+      .status(500)
+      .json({ message: "Failed to login user", error: err.message });
   }
 };
 
@@ -59,8 +61,9 @@ export const findUserById = async (req, res) => {
     }
     res.status(200).json({ data: user });
   } catch (err) {
-    res.status(500).json({ data: err });
-    console.log(err);
+    res
+      .status(500)
+      .json({ message: "Failed to find user", error: err.message });
   }
 };
 
@@ -70,8 +73,7 @@ export const findAllUsers = async (req, res) => {
     const user = await Models.User.Find();
     res.status(200).json({ data: user });
   } catch (err) {
-    res.status(500).json({ data: err });
-    console.log(err);
+    res.status(500).json({ message: "Failed to find all users", error: err });
   }
 };
 

@@ -97,7 +97,7 @@ const Register = () => {
           </FormControl>
           <Button variant="outlined" type="submit">
             {" "}
-            Login{" "}
+            Register{" "}
           </Button>
         </form>
       </div>
