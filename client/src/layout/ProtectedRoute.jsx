@@ -8,7 +8,7 @@ const ProtectedRoute = () => {
 
   useEffect(() => {
     if (!user) {
-      navigate("/"); //redirects already signed in users.
+      navigate("/");
     }
   }, [user, navigate]);
 
