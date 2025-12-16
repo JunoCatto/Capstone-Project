@@ -1,8 +1,15 @@
 import { useAuth } from "../hooks/useAuth";
 import React from "react";
+import { NavLink } from "react-router-dom";
+
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+// MUI icons
+import HomeIcon from "@mui/icons-material/Home";
+import PersonIcon from "@mui/icons-material/Person";
+import MenuIcon from "@mui/icons-material/Menu";
+import CreateIcon from "@mui/icons-material/Create";
 
 export default function Sidebar() {
   const { logout, user } = useAuth();
@@ -16,30 +23,56 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="sidebar">
-      <div className="sidebarButton">Home</div>
-      <div className="sidebarButton">About</div>
-      <div className="sidebarButton">Profile</div>
-      <div className="sidebarButton">
-        <Button variant="outlined" onClick={handleOpen}>
-          {user.userName}
-        </Button>
-        <Menu
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          slotsprops={{
-            paper: {
-              sx: {
-                width: "100%",
-              },
-            },
-          }}
+    <>
+      <div className="sidebarFull">
+        {/* Full screen size */}
+        <NavLink
+          to="/home"
+          end
+          className={({ isActive }) =>
+            `sidebarButtonFull ${isActive ? "active" : ""}`
+          }
         >
-          <MenuItem onClick={handleClose}>Settings</MenuItem>
-          <MenuItem onClick={() => logout()}>Sign Out</MenuItem>
-        </Menu>
+          <HomeIcon />
+          Home
+        </NavLink>
+        <div className="sidebarButtonFull">
+          <PersonIcon />
+          Profile
+        </div>
+        <div className="sidebarButtonFull">
+          <MenuIcon />
+          Settings
+        </div>
+        <div className="postButtonFull">Post</div>
+        <div className="profileFull sidebarButtonFull" onClick={handleOpen}>
+          {user.userName}
+          <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+            <MenuItem onClick={() => logout()}>Sign Out</MenuItem>
+          </Menu>
+        </div>
       </div>
-    </div>
+      {/* Smaller screen size */}
+      <div className="sidebarSmall">
+        <div className="sidebarButtonSmall">
+          <HomeIcon />
+        </div>
+        <div className="sidebarButtonSmall">
+          <PersonIcon />
+        </div>
+        <div className="sidebarButtonSmall">
+          <MenuIcon />
+        </div>
+        <div className="postButtonSmall">
+          <CreateIcon />
+        </div>
+        <div className="profileFull sidebarButtonSmall" onClick={handleOpen}>
+          {user.userName}
+          <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+            <MenuItem onClick={() => logout()}>Sign Out</MenuItem>
+          </Menu>
+        </div>
+      </div>
+    </>
   );
 }

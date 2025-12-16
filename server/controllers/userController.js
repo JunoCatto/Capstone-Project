@@ -15,6 +15,43 @@ const defaultProfilePic = fs.readFileSync(
 // create a new user -> host/api/user/register
 export const createUser = async (req, res) => {
   try {
+    // User Validation
+    const { userName, password } = req.body;
+
+    // Username
+    if (!userName || typeof userName !== "string") {
+      return res.status(400).json({
+        message: "Username must be between 3 and 20 characters",
+        error: "validation_error",
+      });
+    }
+    if (userName.length < 3 || userName.length > 20) {
+      return res.status(400).json({
+        message: "Username must be between 3 and 20 characters",
+        error: "validation_error",
+      });
+    }
+    if (!/^[a-zA-Z0-9_]+$/.test(userName)) {
+      return res.status(400).json({
+        message: "Username can only contain letters, numbers, and underscores",
+        error: "validation_error",
+      });
+    }
+
+    // Password
+    if (!password || typeof password !== "string") {
+      return res.status(400).json({
+        message: "Password is required",
+        error: "validation_error",
+      });
+    }
+    if (password.length < 6) {
+      return res.status(400).json({
+        message: "Password must be atleast 6 characters",
+        error: "validation_error",
+      });
+    }
+
     const user = new Models.User(req.body);
     user.profilePic = {
       data: defaultProfilePic,
@@ -26,6 +63,21 @@ export const createUser = async (req, res) => {
       `User ${savedUser.userName} created successfully: ${savedUser._id}`
     );
   } catch (err) {
+    // MongoDB duplicate key
+    if (err.code === 11000) {
+      return res.status(409).json({
+        message: "Username already exists",
+        error: "duplicate_username",
+      });
+    }
+    // Validation Errors
+    if (err.name === "ValidationError") {
+      return res.status(400).json({
+        message: "Validation Failed",
+        error: err.message,
+      });
+    }
+    // Generic Error
     res
       .status(500)
       .json({ message: "Failed to create user", error: err.message });

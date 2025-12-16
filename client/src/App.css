@@ -23,30 +23,108 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 
 /* Sidebar Styling */
-.sidebar {
-   display: flex;
+.sidebarFull {
+  display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 12px 0;
   gap: 4px;
+  width: 100%;
 }
-.sidebarButton {
-   padding: 12px 24px;
-  border-radius: 9999px;
+.sidebarButtonFull {
+  padding: 12px 24px;
+  border-radius: 100px;
   font-size: 20px;
   font-weight: 400;
   cursor: pointer;
-  transition: background-color 0.2s;
   display: flex;
   align-items: center;
   gap: 20px;
+  transition: background-color 0.2s;
+  color: #e7e9ea;
+  text-decoration: none;
+}
+.sidebarButtonFull:hover {
+  background-color: #1a1b1b
+}
+.sidebarButtonFull:active {
+  background-color: #2a2b2b;
+}
+.sidebarButtonFull.active {
+  font-weight: bold;
+}
+.postButtonFull {
+  width: 100%;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: white;
+  color:black;
+  transition: background-color 0.2s;
+  margin-top: 8px;
+}
+.postButtonFull:hover {
+  background-color:whitesmoke
+}
+.profileFull {
+  position: absolute;
+  bottom: 20px;
 }
 
-
+/* Small sidebar buttons */
+.sidebarSmall {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  width: 100%;
+  padding: 12px 0;
+}
+.sidebarButtonSmall {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  color: white;
+  border-radius: 100px;
+}
+.sidebarButtonSmall:hover {
+  background-color: #1a1b1b;
+}
+.sidebarButtonSmall:active {
+  background-color: #2a2b2b;
+}
+.postButtonSmall {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  cursor: pointer;
+  display: flex;
+  width: 50px;
+  height: 50px;
+  margin-top: 4px;
+  transition: background-color 0.2s;
+  background-color: white;
+  color:black;
+}
+.postButtonSmall:hover {
+  background-color: whitesmoke
+}
 /* Main Content Container */
 .mainContainer {
   display: flex;
@@ -86,6 +164,12 @@ main {
   color: #e7e9ea;
   margin-bottom: 8px;
   word-wrap: break-word;
+}
+.feedHeader {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
 }
 .feedInnerDiv span {
   font-size: 13px;
@@ -183,24 +267,36 @@ main {
 
 
 /* Responsive Media Queries */
-@media (max-width: 1024px) {
+@media (max-width: 1042px) {
   .trendSidebar {
     display: none;
   }
 }
-
-@media (max-width: 768px) {
+@media (max-width: 1142px) {
   .leftContainer {
-    width: 88px;
+    width: 68px;
+    padding: 0;
   }
-  
-  .sidebarButton { /* Styling for icons */
-    padding: 12px;
-    justify-content: center;
+  .sidebarFull {
+    display: none;
   }
-  
+  .sidebarButtonFull { /* Styling for icons */
+    display: none;
+  }
+    .postButtonFull {
+    display: none;
+  }
+  .sidebarSmall {
+    display: flex;
+  }
+  .sidebarButtonSmall {
+    display: flex;
+  }
+  .postButtonSmall {
+    display: flex; 
+  }
   main {
-    max-width: 100%;
+    min-width: auto;
   }
 }
 

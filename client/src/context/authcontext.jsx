@@ -27,8 +27,10 @@ export const AuthProvider = ({ children }) => {
       const userData = data.data; // i.e. { userName, password }
       dispatch({ type: "AUTH_SUCCESS", payload: userData });
       localStorage.setItem("user", JSON.stringify(userData));
+      return { success: true };
     } catch (err) {
-      return dispatch({ type: "AUTH_FAILURE", payload: err.message });
+      dispatch({ type: "AUTH_FAILURE", payload: err.message });
+      return { success: false, message: err.message };
     }
   };
 
@@ -50,8 +52,10 @@ export const AuthProvider = ({ children }) => {
         throw new Error(data.message);
       }
       dispatch({ type: "AUTH_START", payload: null }); // does not dispatch AUTH_SUCCESS as that would log the user in immediately.
+      return { success: true };
     } catch (err) {
-      return dispatch({ type: "AUTH_FAILURE", payload: err.message });
+      dispatch({ type: "AUTH_FAILURE", payload: err.message });
+      return { success: false, message: err.message };
     }
   };
 

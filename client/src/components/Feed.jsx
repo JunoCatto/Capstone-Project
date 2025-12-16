@@ -18,11 +18,13 @@ export default function Feed({ posts, loading, error }) {
         return (
           <div className="feedPosts" key={post._id || index}>
             <div className="feedInnerDiv">
-              <div>{post.author}</div>
+              <div className="feedHeader">
+                <h4>{post.author}</h4>
+                <span>
+                  {date} | {time}
+                </span>
+              </div>
               <p>{post.content}</p>
-              <span>
-                {date} | {time}
-              </span>
             </div>
           </div>
         );

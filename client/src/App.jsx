@@ -1,11 +1,11 @@
 import "./App.css";
 
-import { Routes, Route } from "react-router";
+import { Routes, Route } from "react-router-dom";
 
 // Layout import
 import AppLayout from "./layout/AppLayout.jsx";
-import GuestRoute from "./components/GuestRoute.jsx";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import GuestRoute from "./layout/GuestRoute.jsx";
+import ProtectedRoute from "./layout/ProtectedRoute.jsx";
 // Page imports
 import Home from "./pages/Home.jsx";
 import Register from "./pages/Register.jsx";
