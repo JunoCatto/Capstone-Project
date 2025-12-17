@@ -1,6 +1,23 @@
+import { useState } from "react";
+import { likePost } from "../api/posts";
 import { profilePicUrl } from "../utils/imageHelper";
+import { useAuth } from "../hooks/useAuth";
+// Icons
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 export default function Feed({ posts, loading, error }) {
+  const [localPosts, setLocalPosts] = useState([]);
+
+  const { user } = useAuth();
+
+  const handleLike = async (postId) => {
+    try {
+      const result = await likePost(postId, user._id);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
@@ -30,6 +47,9 @@ export default function Feed({ posts, loading, error }) {
                 </span>
               </div>
               <p>{post.content}</p>
+              <div onClick={() => handleLike(post._id)}>
+                <FavoriteBorderIcon /> {post.likes}
+              </div>
             </div>
           </div>
         );

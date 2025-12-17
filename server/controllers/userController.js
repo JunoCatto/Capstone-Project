@@ -122,7 +122,7 @@ export const findUserById = async (req, res) => {
 // Find all users -> host/api/user
 export const findAllUsers = async (req, res) => {
   try {
-    const user = await Models.User.Find();
+    const user = await Models.User.find();
     res.status(200).json({ data: user });
   } catch (err) {
     res.status(500).json({ message: "Failed to find all users", error: err });

@@ -43,7 +43,9 @@ export const createPost = async (req, res) => {
 // find all posts for feed
 export const getPosts = async (req, res) => {
   try {
-    const posts = await Models.Post.find().sort({ createdAt: -1 }); // sorts posts top to bottom by date
+    const posts = await Models.Post.find()
+      .populate("userId", "userName")
+      .sort({ createdAt: -1 }); // sorts posts top to bottom by date
     res.status(200).json({ data: posts });
   } catch (err) {
     res
