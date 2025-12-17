@@ -39,4 +39,16 @@ export const userSchema = new Schema({
   },
 });
 
+// converts profilepic to base64 when res.json called later
+userSchema.set("toJSON", {
+  transform: function (doc, ret, options) {
+    if (ret.profilePic && ret.profilePic.data) {
+      if (Buffer.isBuffer(ret.profilePic.data)) {
+        ret.profilePic.data = ret.profilePic.data.toString("base64");
+      }
+    }
+    return ret;
+  },
+});
+
 export const User = mongoose.model("user", userSchema);

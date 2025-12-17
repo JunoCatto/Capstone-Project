@@ -11,4 +11,5 @@ router.post("/auth/login", controllers.userController.loginUser);
 router.get("/user/:id", controllers.userController.findUserById);
 router.get("/user", controllers.userController.findAllUsers);
 
+router.get("/user/:id/pic", controllers.userController.findUserProfilePic);
 export default router;

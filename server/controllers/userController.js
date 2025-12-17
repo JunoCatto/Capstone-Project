@@ -129,9 +129,20 @@ export const findAllUsers = async (req, res) => {
   }
 };
 
+// Find user profilepic
+export const findUserProfilePic = async (req, res) => {
+  const user = await Models.User.findById(req.params.id);
+  if (!user || !user.profilePic) {
+    return res.sendStatus(404);
+  }
+  res.set("Content-Type", user.profilePic.contentType);
+  res.send(user.profilePic.data);
+};
+
 export default {
   createUser,
   loginUser,
   findUserById,
   findAllUsers,
+  findUserProfilePic,
 };

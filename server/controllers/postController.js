@@ -2,13 +2,13 @@ import Models from "../models/index.js";
 
 export const createPost = async (req, res) => {
   try {
-    const { userId, userName, content } = req.body;
+    const { author, content } = req.body;
 
     // Error handling
-    if (!userId || !userName || !content) {
+    if (!author || !content) {
       return res
         .status(400)
-        .json({ message: "userId, userName, and content are required" });
+        .json({ message: "author and content are required" });
     }
     if (content.trim().length === 0) {
       return res.status(400).json({ message: "Post content cannot be empty" });
@@ -21,12 +21,17 @@ export const createPost = async (req, res) => {
 
     const post = new Models.Post({
       content: content.trim(),
-      author: userName,
-      userId: userId,
+      author: {
+        userId: author.userId,
+        userName: author.userName,
+        profilePic: author.profilePic,
+      },
     });
     const savedPost = await post.save();
     res.status(200).json({ data: savedPost });
-    console.log(`New post of id: ${savedPost._id} created by ${userName}`);
+    console.log(
+      `New post of id: ${savedPost._id} created by ${author.userName}`
+    );
   } catch (err) {
     res
       .status(500)

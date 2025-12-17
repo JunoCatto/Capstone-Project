@@ -1,3 +1,5 @@
+import { getProfilePic } from "../utils/imageHelper";
+
 export default function Feed({ posts, loading, error }) {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
@@ -19,7 +21,10 @@ export default function Feed({ posts, loading, error }) {
           <div className="feedPosts" key={post._id || index}>
             <div className="feedInnerDiv">
               <div className="feedHeader">
-                <h4>{post.author}</h4>
+                <div className="feedPfp">
+                  <img src={post.author.profilePic}></img>
+                </div>
+                <h4>{post.author.userName}</h4>
                 <span>
                   {date} | {time}
                 </span>

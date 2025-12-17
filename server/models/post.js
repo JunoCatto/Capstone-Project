@@ -3,8 +3,19 @@ const Schema = mongoose.Schema;
 
 export const postSchema = new Schema({
   author: {
-    type: String,
-    required: true,
+    userId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "user",
+    },
+    userName: {
+      type: String,
+      required: true,
+    },
+    profilePic: {
+      type: String,
+      required: true,
+    },
   },
   content: {
     type: String,
@@ -15,11 +26,7 @@ export const postSchema = new Schema({
     default: 0,
   },
   // need to add comments
-  userId: {
-    type: String,
-    required: true,
-    ref: "user",
-  },
+
   createdAt: {
     type: Date,
     default: Date.now,

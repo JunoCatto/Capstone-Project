@@ -45,9 +45,11 @@
   display: flex;
   align-items: center;
   gap: 20px;
+  background-color: transparent;
   transition: background-color 0.2s;
   color: #e7e9ea;
   text-decoration: none;
+  border: 0;
 }
 .sidebarButtonFull:hover {
   background-color: #1a1b1b
@@ -71,59 +73,81 @@
   gap: 20px;
   background-color: white;
   color:black;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, width 0.2s;
   margin-top: 8px;
 }
 .postButtonFull:hover {
   background-color:whitesmoke
 }
+.postButtonFull div {
+  display: none;
+}
 .profileFull {
   position: absolute;
   bottom: 20px;
+  border: 0px;
 }
-
-/* Small sidebar buttons */
-.sidebarSmall {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 4px;
-  width: 100%;
-  padding: 12px 0;
+.profilePic {
+   display: flex;
+   align-items: center;
+   gap: 10px;
 }
-.sidebarButtonSmall {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-  width: 50px;
-  cursor: pointer;
-  color: white;
+.profilePic img {
+  height: 40px;
+  width: 40px;
   border-radius: 100px;
 }
-.sidebarButtonSmall:hover {
-  background-color: #1a1b1b;
+.signOut {
+  font-size: 14px;
 }
-.sidebarButtonSmall:active {
-  background-color: #2a2b2b;
+/* BaseUI popover */
+.popup {
+  box-sizing: border-box;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid, white;
+  box-shadow: 
+    0 0 10px rgba(29, 155, 240, 0.5),
+    0 0 20px rgba(29, 155, 240, 0.3),
+    0 0 30px rgba(29, 155, 240, 0.1);
+  background-color: black;
+  transform-origin: var(--transform-origin);
+  transition:
+    transform 150ms,
+    opacity 150ms;
+  width: var(--popup-width, auto);
+  height: var(--popup-height, auto);
+  max-width: 500px;
+  &[data-starting-style],
+  &[data-ending-style] {
+    opacity: 0;
+    transform: scale(0.9);
+  }
 }
-.postButtonSmall {
+.Arrow {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 100px;
-  cursor: pointer;
-  display: flex;
-  width: 50px;
-  height: 50px;
-  margin-top: 4px;
-  transition: background-color 0.2s;
-  background-color: white;
-  color:black;
+  &[data-side='top'] {
+    bottom: -8px;
+    rotate: 180deg;
+  }
+  &[data-side='bottom'] {
+    top: -8px;
+    rotate: 0deg;
+  }
+  &[data-side='left'] {
+    right: -13px;
+    rotate: 90deg;
+  }
+  &[data-side='right'] {
+    left: -13px;
+    rotate: -90deg;
+  }
 }
-.postButtonSmall:hover {
-  background-color: whitesmoke
+.ArrowFill {
+  fill: black;
+}
+.ArrowInnerStroke {
+  fill: white;
 }
 /* Main Content Container */
 .mainContainer {
@@ -170,6 +194,12 @@ main {
   gap: 10px;
   align-items: center;
   margin-bottom: 10px;
+}
+.feedPfp img {
+  height: 25px;
+  width: 25px;
+  border-radius: 100px;
+
 }
 .feedInnerDiv span {
   font-size: 13px;
@@ -274,27 +304,34 @@ main {
 }
 @media (max-width: 1142px) {
   .leftContainer {
-    width: 68px;
+    width: 150px;
     padding: 0;
   }
   .sidebarFull {
+    align-items: center;
+  }
+  .sidebarButtonFull { 
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+  }
+  .sidebarButtonFull span { 
     display: none;
   }
-  .sidebarButtonFull { /* Styling for icons */
-    display: none;
+   .postButtonFull {
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
   }
-    .postButtonFull {
-    display: none;
-  }
-  .sidebarSmall {
+  .postButtonFull div {
     display: flex;
   }
-  .sidebarButtonSmall {
-    display: flex;
+  .postButtonFull span {
+    display: none;
   }
-  .postButtonSmall {
-    display: flex; 
-  }
+ 
   main {
     min-width: auto;
   }

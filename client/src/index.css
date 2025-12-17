@@ -3,6 +3,7 @@
   --primary-text-colour: #e7e9ea;
   font-family: 'Roboto', sans-serif;
   color-scheme: dark;
+  isolation: isolate;
 }
 
 body, html {
