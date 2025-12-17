@@ -82,8 +82,8 @@ export default function Sidebar() {
                 <Popover.Arrow className="Arrow">
                   <ArrowSvg />
                 </Popover.Arrow>
-                <Popover.Title>test title</Popover.Title>
-                <Popover.Description>
+                <Popover.Title className="popupTitle">test title</Popover.Title>
+                <Popover.Description className="popupDesc">
                   <button
                     className="signOut sidebarButtonFull"
                     onClick={handleLogout}
@@ -96,47 +96,6 @@ export default function Sidebar() {
           </Popover.Portal>
         </Popover.Root>
       </div>
-      {/* Smaller screen size */}
-      {/* <div className="sidebarSmall">
-        <div className="sidebarButtonSmall">
-          <HomeIcon />
-        </div>
-        <div className="sidebarButtonSmall">
-          <PersonIcon />
-        </div>
-        <div className="sidebarButtonSmall">
-          <MenuIcon />
-        </div>
-        <div className="postButtonSmall">
-          <CreateIcon />
-        </div>
-        <Popover.Root>
-          <Popover.Trigger className="profileFull sidebarButtonSmall">
-            <div className="profilePic">
-              {" "}
-              <img src={profilePic}></img>
-            </div>
-          </Popover.Trigger>
-          <Popover.Portal>
-            <Popover.Positioner sideOffset={8}>
-              <Popover.Popup className="popup">
-                <Popover.Arrow className="Arrow">
-                  <ArrowSvg />
-                </Popover.Arrow>
-                <Popover.Title>test title</Popover.Title>
-                <Popover.Description>
-                  <button
-                    className="signOut sidebarButtonFull"
-                    onClick={handleLogout}
-                  >
-                    Sign Out
-                  </button>
-                </Popover.Description>
-              </Popover.Popup>
-            </Popover.Positioner>
-          </Popover.Portal>
-        </Popover.Root>
-      </div> */}
     </>
   );
 }

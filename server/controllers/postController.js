@@ -2,10 +2,10 @@ import Models from "../models/index.js";
 
 export const createPost = async (req, res) => {
   try {
-    const { author, content } = req.body;
+    const { userId, content } = req.body;
 
     // Error handling
-    if (!author || !content) {
+    if (!userId || !content) {
       return res
         .status(400)
         .json({ message: "author and content are required" });
@@ -18,19 +18,20 @@ export const createPost = async (req, res) => {
         .status(422)
         .json({ message: "Post content is too long. Maximum 280 characters" });
     }
-
     const post = new Models.Post({
+      userId,
       content: content.trim(),
-      author: {
-        userId: author.userId,
-        userName: author.userName,
-        profilePic: author.profilePic,
-      },
     });
     const savedPost = await post.save();
-    res.status(200).json({ data: savedPost });
+
+    // populates post with user data for usage on the form
+    const populatedPost = await Models.Post.findById(savedPost._id).populate(
+      "userId",
+      "userName"
+    );
+    res.status(200).json({ data: populatedPost });
     console.log(
-      `New post of id: ${savedPost._id} created by ${author.userName}`
+      `New post of id: ${populatedPost._id} created by ${populatedPost.userId.userName}`
     );
   } catch (err) {
     res
@@ -47,7 +48,7 @@ export const getPosts = async (req, res) => {
   } catch (err) {
     res
       .status(500)
-      .json({ message: "Failed to get posts", error: err.message });
+      .json({ message: "Failed to fetch posts", error: err.message });
   }
 };
 

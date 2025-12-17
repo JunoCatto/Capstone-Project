@@ -8,11 +8,7 @@ export const createPost = async (user, content) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        author: {
-          userId: user._id,
-          userName: user.userName,
-          profilePic: `${baseUrl}/user/${user._id}/pic`,
-        },
+        userId: user._id,
         content,
       }),
     });

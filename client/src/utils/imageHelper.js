@@ -1,3 +1,4 @@
+// Gets from base64 of user schema
 export const getProfilePic = (profilePic) => {
   if (!profilePic || !profilePic.data) {
     return null;
@@ -15,4 +16,9 @@ export const getProfilePic = (profilePic) => {
   }
   const contentType = profilePic.contentType || "image/png";
   return `data:${contentType};base64,${base64Data}`;
+};
+// Profile pictures for feed
+export const profilePicUrl = (userId) => {
+  const baseUrl = "http://localhost:5000/api";
+  return `${baseUrl}/user/${userId}/pic`;
 };

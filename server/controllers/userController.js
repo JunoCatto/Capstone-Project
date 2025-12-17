@@ -129,14 +129,21 @@ export const findAllUsers = async (req, res) => {
   }
 };
 
-// Find user profilepic
+// Find user profilepic host/api/user/:id/pic
 export const findUserProfilePic = async (req, res) => {
-  const user = await Models.User.findById(req.params.id);
-  if (!user || !user.profilePic) {
-    return res.sendStatus(404);
+  try {
+    const user = await Models.User.findById(req.params.id);
+    if (!user || !user.profilePic) {
+      return res.sendStatus(404);
+    }
+    res.set("Content-Type", user.profilePic.contentType);
+    // Possible to cache the picture here as well
+    res.send(user.profilePic.data);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Failed to get profile picture", error: err.message });
   }
-  res.set("Content-Type", user.profilePic.contentType);
-  res.send(user.profilePic.data);
 };
 
 export default {

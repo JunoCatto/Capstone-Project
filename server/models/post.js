@@ -2,20 +2,10 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 export const postSchema = new Schema({
-  author: {
-    userId: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: "user",
-    },
-    userName: {
-      type: String,
-      required: true,
-    },
-    profilePic: {
-      type: String,
-      required: true,
-    },
+  userId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "user",
   },
   content: {
     type: String,
