@@ -24,17 +24,15 @@ export const AuthProvider = ({ children }) => {
       if (!response.ok) {
         throw new Error(data.message);
       }
-      console.log(data);
-      dispatch({ type: "AUTH_SUCCESS", payload: data });
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          _id: data.data._id,
-          userName: data.data.userName,
-          profilePic: data.data.profilePic,
-          token: data.token,
-        })
-      );
+      const flatUser = {
+        _id: data.data._id,
+        userName: data.data.userName,
+        profilePic: data.data.profilePic,
+        token: data.token,
+      };
+      console.log(data.data);
+      dispatch({ type: "AUTH_SUCCESS", payload: flatUser });
+      localStorage.setItem("user", JSON.stringify(flatUser));
       return { success: true };
     } catch (err) {
       dispatch({ type: "AUTH_FAILURE", payload: err.message });

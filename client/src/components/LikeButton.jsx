@@ -34,7 +34,13 @@ export default function LikeButton({ postId, initialLikes, initialLiked }) {
     <div className="likeButton">
       <div onClick={handleLike}>
         <div className="like">
-          {serverState.liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          {serverState.liked ? (
+            <div style={{ color: "#e74c49ff" }}>
+              <FavoriteIcon />
+            </div>
+          ) : (
+            <FavoriteBorderIcon />
+          )}
         </div>
         <span style={{ color: "white" }}>{serverState.count}</span>
       </div>

@@ -19,7 +19,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const { login, loading, error } = useAuth();
+  const { login, loading, error, user } = useAuth();
 
   // Handling password visibility
   const handleClickShowPassword = () => {
