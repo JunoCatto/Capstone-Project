@@ -1,17 +1,15 @@
 const baseUrl = "http://localhost:5000/api";
 
 // Posts
-export const createPost = async (user, content) => {
+export const createPost = async (content, user) => {
   try {
     const response = await fetch(`${baseUrl}/user/post`, {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${user.token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        userId: user._id,
-        content,
-      }),
+      body: JSON.stringify({ content }),
     });
     const data = await response.json();
     if (!response.ok) {
@@ -23,14 +21,18 @@ export const createPost = async (user, content) => {
     throw err;
   }
 };
-export const getPosts = async () => {
+export const getPosts = async (user) => {
   try {
-    const response = await fetch(`${baseUrl}/posts`);
+    const response = await fetch(`${baseUrl}/posts`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
     const data = await response.json();
     if (!response.ok) {
       throw new Error(data.message);
     }
-    return data.data;
+    return data;
   } catch (err) {
     console.error("Error getting posts", err);
     throw err;
@@ -38,22 +40,22 @@ export const getPosts = async () => {
 };
 
 // Likes
-export const likePost = async (postId, userId) => {
+export const likePost = async (postId, user) => {
   try {
     const response = await fetch(`${baseUrl}/post/${postId}/like`, {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${user.token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userId,
+        userId: user._id,
       }),
     });
     const data = await response.json();
     if (!response.ok) {
       throw new Error(data.message);
     }
-    console.log(data);
     return data;
   } catch (err) {
     console.error("Error liking post", err);

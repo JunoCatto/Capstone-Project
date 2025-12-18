@@ -3,6 +3,7 @@
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
+import jwt from "jsonwebtoken";
 import Models from "../models/index.js";
 
 // default profile pic for new users
@@ -95,9 +96,26 @@ export const loginUser = async (req, res) => {
     if (user.password !== password) {
       return res.status(400).json({ message: "Incorrect password" });
     }
-    res.status(200).json({ data: user });
+
+    // Create JWT on successful login
+    const token = jwt.sign(
+      { _id: user._id, userName: user.userName, profilePic: user.profilePic },
+      process.env.JWT_SECRET || "secret",
+      { expiresIn: "7d" }
+    );
+    res
+      .status(200)
+      .json({
+        data: {
+          _id: user._id,
+          userName: user.userName,
+          profilePic: user.profilePic,
+        },
+        token,
+      });
     console.log(`User ${userName} signed in successfully`);
   } catch (err) {
+    console.error("Error logging in user", err);
     res
       .status(500)
       .json({ message: "Failed to login user", error: err.message });

@@ -3,6 +3,7 @@ import Models from "../models/index.js";
 export const likePost = async (req, res) => {
   const { postId } = req.params;
   const { userId } = req.body;
+
   try {
     if (!userId || !postId) {
       return res
@@ -15,18 +16,27 @@ export const likePost = async (req, res) => {
     });
     await like.save();
     // update post like count
-    await Models.Post.findByIdAndUpdate(postId, {
-      $inc: { likes: 1 },
-    });
-    res.status(200).json({ message: "Post liked", liked: true });
+    const post = await Models.Post.findByIdAndUpdate(
+      postId,
+      { $inc: { likes: 1 } },
+      { new: true }
+    );
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+    res.status(200).json({ likeCount: post.likes, liked: true });
   } catch (err) {
     if (err.code === 11000) {
       // if duplicate like, unlike the post
       await Models.Like.deleteOne({ userId, postId });
-      await Models.Post.findByIdAndUpdate(postId, {
-        $inc: { likes: -1 },
-      });
-      return res.status(200).json({ message: "Post unliked", liked: false });
+      const post = await Models.Post.findByIdAndUpdate(
+        postId,
+        {
+          $inc: { likes: -1 },
+        },
+        { new: true }
+      );
+      return res.status(200).json({ likeCount: post.likes, liked: false });
     }
     res
       .status(500)

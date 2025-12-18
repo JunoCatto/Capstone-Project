@@ -211,13 +211,21 @@ main {
   height: 30px;
   width: 30px;
   border-radius: 100px;
-
 }
 .feedInnerDiv span {
   font-size: 13px;
   color: #71767b;
 }
+.likeButton {
+  display: flex;
+  justify-content: flex-end;
 
+}
+.likeButton div {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
 
 /* Post Input */ 
 .postDiv {

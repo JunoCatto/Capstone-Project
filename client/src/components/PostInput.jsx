@@ -16,14 +16,13 @@ export default function PostInput({ addImmediately }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!postText.trim()) return;
     if (postText.length > maxContent) {
       setError(`Post content is too long. Maximum ${maxContent} characters`);
       return;
     }
     try {
-      const newPost = await createPost(user, postText);
+      const newPost = await createPost(postText, user);
       if (newPost) {
         addImmediately(newPost);
       }

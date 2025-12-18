@@ -1,29 +1,13 @@
-import { useState } from "react";
-import { likePost } from "../api/posts";
 import { profilePicUrl } from "../utils/imageHelper";
-import { useAuth } from "../hooks/useAuth";
 // Icons
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import LikeButton from "./LikeButton.jsx";
 
 export default function Feed({ posts, loading, error }) {
-  const [localPosts, setLocalPosts] = useState([]);
-
-  const { user } = useAuth();
-
-  const handleLike = async (postId) => {
-    try {
-      const result = await likePost(postId, user._id);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
-
   return (
     <div className="feed">
-      {posts.map((post, index) => {
+      {posts.map((post) => {
         const postDate = new Date(post.createdAt);
         const date = postDate.toLocaleDateString("en-UK", {
           month: "short",
@@ -35,7 +19,7 @@ export default function Feed({ posts, loading, error }) {
           hour12: true,
         });
         return (
-          <div className="feedPosts" key={post._id || index}>
+          <div className="feedPosts" key={post._id}>
             <div className="feedInnerDiv">
               <div className="feedHeader">
                 <div className="feedPfp">
@@ -47,8 +31,12 @@ export default function Feed({ posts, loading, error }) {
                 </span>
               </div>
               <p>{post.content}</p>
-              <div onClick={() => handleLike(post._id)}>
-                <FavoriteBorderIcon /> {post.likes}
+              <div>
+                <LikeButton
+                  postId={post._id}
+                  initialLikes={post.likes}
+                  initialLiked={post.liked}
+                />
               </div>
             </div>
           </div>
