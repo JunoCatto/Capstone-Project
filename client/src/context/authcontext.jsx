@@ -57,7 +57,12 @@ export const AuthProvider = ({ children }) => {
       if (!response.ok) {
         throw new Error(data.message);
       }
-      dispatch({ type: "AUTH_START", payload: null }); // does not dispatch AUTH_SUCCESS as that would log the user in immediately.
+      dispatch({
+        type: "AUTH_START",
+        payload: null,
+      }); /* does not dispatch AUTH_SUCCESS as that would log the user
+       in immediately without checking token etc */
+      login(userName, password);
       return { success: true };
     } catch (err) {
       dispatch({ type: "AUTH_FAILURE", payload: err.message });

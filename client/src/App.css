@@ -105,7 +105,7 @@
   box-sizing: border-box;
   padding: 1rem 1.5rem;
   border-radius: 0.5rem;
-  border: 1px solid, white;
+  border: 1px solid white;
   box-shadow: 
     0 0 10px rgba(255, 255, 255, 0.5),
     0 0 20px rgba(104, 104, 104, 0.3),
@@ -137,6 +137,7 @@
   height: 100%;
 }
 .Arrow {
+  
   display: flex;
   &[data-side='top'] {
     bottom: -8px;
@@ -153,7 +154,7 @@
   &[data-side='right'] {
     left: -13px;
     rotate: -90deg;
-  }
+  } 
 }
 .ArrowFill {
   fill: black;
@@ -216,16 +217,34 @@ main {
   font-size: 13px;
   color: #71767b;
 }
-.likeButton {
+.feedLowerDiv {
   display: flex;
   justify-content: flex-end;
-
+  align-items: center;
+  gap: 5px;
 }
-.likeButton div {
+.likeButton {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 2px;
+
 }
+/* .like {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+  top: 0;
+}
+.like:hover {
+  background-color: #1a1b1b;
+}
+.like:active {
+  background-color: #2a2b2b;
+} */
 
 /* Post Input */ 
 .postDiv {
@@ -247,6 +266,30 @@ main {
 }
 .postInner {
   width: 100%;
+}
+.mainPostButton {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+.mainPostButton Button.MuiButton-root {
+  padding: 10px 24px;
+  border-radius: 100px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  background-color: white;
+  transition: background-color 0.2s;
+  color: black;
+  text-decoration: none;
+  border: 1px solid #e7e9ea;
+}
+.mainPostButton Button.MuiButton-root:disabled { 
+  background-color: transparent;
+}
+.mainPostButton Button.MuiButton-root:hover {
+  background-color: whitesmoke;
 }
 
 

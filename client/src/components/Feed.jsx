@@ -1,6 +1,7 @@
 import { profilePicUrl } from "../utils/imageHelper";
 // Icons
 import LikeButton from "./LikeButton.jsx";
+import CommentButton from "./commentButton.jsx";
 
 export default function Feed({ posts, loading, error }) {
   if (loading) return <p>Loading...</p>;
@@ -31,7 +32,8 @@ export default function Feed({ posts, loading, error }) {
                 </span>
               </div>
               <p>{post.content}</p>
-              <div>
+              <div className="feedLowerDiv">
+                <CommentButton />
                 <LikeButton
                   postId={post._id}
                   initialLikes={post.likes}

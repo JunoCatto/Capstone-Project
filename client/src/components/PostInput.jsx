@@ -37,11 +37,14 @@ export default function PostInput({ addImmediately }) {
       <div className="postInner">
         <form id="postForm" onSubmit={handleSubmit}>
           <div style={{ paddingBottom: "10px" }}>
+            {/* Want to make it so the textfield can't have input
+             past maxContent, but can still be deleted*/}
             <TextField
               variant="standard"
               placeholder="What's on your mind?"
               multiline
-              maxRows={4}
+              maxRows={6}
+              maxLength={maxContent}
               fullWidth
               value={postText}
               onChange={(e) => {
@@ -53,17 +56,17 @@ export default function PostInput({ addImmediately }) {
                 },
               }}
             />
-            <div style={{ color: overLimit ? "red" : "" }}>
+          </div>
+          <div className="mainPostButton">
+            <div style={{ color: overLimit ? "#e74c49ff" : "" }}>
               {postText.length}/{maxContent}
             </div>
-          </div>
-          <div>
             <Button
               disabled={!postText.trim() || overLimit}
-              variant="outlined"
               type="submit"
+              sx={{ textTransform: "none" }}
             >
-              POST
+              Post
             </Button>
           </div>
         </form>
