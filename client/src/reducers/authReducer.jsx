@@ -8,7 +8,7 @@ export const initialState = (() => {
       error: null,
     };
   } catch (err) {
-    console.serror("Invalid user data", err);
+    console.error("Invalid user data", err);
     localStorage.removeItem("user");
     return { user: null, loading: false, error: null };
   }
