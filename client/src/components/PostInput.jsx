@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import { useAuth } from "../hooks/useAuth.jsx";
 import { useState } from "react";
 import { createPost } from "../api/posts.js";
+import { getProfilePic } from "../utils/imageHelper.js";
 
 const maxContent = 280;
 
@@ -10,6 +11,7 @@ export default function PostInput({ addImmediately }) {
   const { user } = useAuth();
   const [postText, setPostText] = useState("");
   const [error, setError] = useState(null);
+  const profilePic = getProfilePic(user.profilePic);
 
   const remainingCharacters = maxContent - postText.length;
   const overLimit = remainingCharacters < 0;
@@ -36,29 +38,46 @@ export default function PostInput({ addImmediately }) {
     <div className="postDiv">
       <div className="postInner">
         <form id="postForm" onSubmit={handleSubmit}>
-          <div style={{ paddingBottom: "10px" }}>
-            {/* Want to make it so the textfield can't have input
-             past maxContent, but can still be deleted*/}
-            <TextField
-              variant="standard"
-              placeholder="What's on your mind?"
-              multiline
-              maxRows={6}
-              maxLength={maxContent}
-              fullWidth
-              value={postText}
-              onChange={(e) => {
-                setPostText(e.target.value);
-              }}
-              slotProps={{
-                input: {
-                  disableUnderline: "true",
-                },
+          <div
+            style={{
+              paddingBottom: "10px",
+              display: "flex",
+              alignItems: "flex-start",
+            }}
+          >
+            <img
+              src={profilePic}
+              alt={`${user.userName} profile`}
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: "50%",
+                marginRight: 20,
               }}
             />
+            <div style={{ flex: 1 }}>
+              <TextField
+                autoFocus
+                variant="standard"
+                placeholder="What's on your mind?"
+                multiline
+                maxRows={6}
+                fullWidth
+                value={postText}
+                onChange={(e) => {
+                  setPostText(e.target.value);
+                }}
+                slotProps={{
+                  input: {
+                    inputProps: { maxLength: maxContent },
+                    disableUnderline: true,
+                  },
+                }}
+              />
+            </div>
           </div>
           <div className="mainPostButton">
-            <div style={{ color: overLimit ? "#e74c49ff" : "" }}>
+            <div style={{ color: overLimit ? "#e74c49ff" : "white" }}>
               {postText.length}/{maxContent}
             </div>
             <Button

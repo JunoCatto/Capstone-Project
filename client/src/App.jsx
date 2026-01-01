@@ -10,6 +10,7 @@ import ProtectedRoute from "./layout/ProtectedRoute.jsx";
 import Home from "./pages/Home.jsx";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
+import Post from "./pages/Post.jsx";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
           <Route path="/home" element={<Home />} />
+          <Route path="/post/:id" element={<Post />} />
         </Route>
       </Route>
     </Routes>

@@ -32,7 +32,12 @@ export default function LikeButton({ postId, initialLikes, initialLiked }) {
   };
   return (
     <div className="likeButton">
-      <div onClick={handleLike}>
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+          handleLike();
+        }}
+      >
         <div className="like">
           {serverState.liked ? (
             <FavoriteIcon style={{ color: "#e74c49ff" }} />

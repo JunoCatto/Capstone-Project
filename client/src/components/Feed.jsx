@@ -1,11 +1,15 @@
 import { profilePicUrl } from "../utils/imageHelper";
+import { useNavigate } from "react-router-dom";
 // Icons
 import LikeButton from "./LikeButton.jsx";
-import CommentButton from "./commentButton.jsx";
+import CommentButton from "./CommentButton.jsx";
 
 export default function Feed({ posts, loading, error }) {
+  const navigate = useNavigate();
+  // add loading ring
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
+
   return (
     <div className="feed">
       {posts.map((post) => {
@@ -20,7 +24,12 @@ export default function Feed({ posts, loading, error }) {
           hour12: true,
         });
         return (
-          <div className="feedPosts" key={post._id}>
+          <div
+            className="feedPosts"
+            key={post._id}
+            onClick={() => navigate(`/post/${post._id}`)}
+            style={{ cursor: "pointer" }}
+          >
             <div className="feedInnerDiv">
               <div className="feedHeader">
                 <div className="feedPfp">
@@ -31,9 +40,12 @@ export default function Feed({ posts, loading, error }) {
                   {date} | {time}
                 </span>
               </div>
-              <p>{post.content}</p>
+              <p style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+                {/* pre-wrap to preserve line breaks, wordBreak to break words */}
+                {post.content}
+              </p>
               <div className="feedLowerDiv">
-                <CommentButton />
+                <CommentButton initialComments={post.commentsCount} />
                 <LikeButton
                   postId={post._id}
                   initialLikes={post.likes}

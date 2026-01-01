@@ -62,3 +62,60 @@ export const likePost = async (postId, user) => {
     throw err;
   }
 };
+
+export const getPost = async (postId, user) => {
+  try {
+    const response = await fetch(`${baseUrl}/post/${postId}`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    return data.data;
+  } catch (err) {
+    console.error("Error getting post", err);
+    throw err;
+  }
+};
+
+export const getComments = async (postId, user, page = 1, limit = 20) => {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/post/${postId}/comments?page=${page}&limit=${limit}`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    return data.data;
+  } catch (err) {
+    console.error("Error getting comments", err);
+    throw err;
+  }
+};
+
+export const createComment = async (postId, content, user) => {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/post/${postId}/comment`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content }),
+      }
+    );
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    return data.data;
+  } catch (err) {
+    console.error("Error creating comment", err);
+    throw err;
+  }
+};

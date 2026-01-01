@@ -69,7 +69,34 @@ export const getPosts = async (req, res) => {
   }
 };
 
+export const getPost = async (req, res) => {
+  try {
+    const userId = req.user && req.user._id;
+    const { postId } = req.params;
+    console.log(`[GET] /post/${postId}`, { userId });
+    const post = await Models.Post.findById(postId).populate(
+      "userId",
+      "userName"
+    );
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    const like = await Models.Like.findOne({ postId, userId });
+    const formatted = {
+      ...post.toObject(),
+      liked: !!like,
+    };
+
+    res.status(200).json({ data: formatted });
+  } catch (err) {
+    console.error("Error fetching post", err);
+    res
+      .status(500)
+      .json({ message: "Failed to fetch post", error: err.message });
+  }
+};
+
 export default {
   createPost,
   getPosts,
+  getPost,
 };

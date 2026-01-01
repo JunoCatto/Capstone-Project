@@ -1,5 +1,5 @@
 import { useAuth } from "../hooks/useAuth";
-import React from "react";
+import React, { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { getProfilePic } from "../utils/imageHelper";
 
@@ -11,6 +11,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
 import MenuIcon from "@mui/icons-material/Menu";
 import CreateIcon from "@mui/icons-material/Create";
+import PostModal from "./PostModal";
 
 export default function Sidebar() {
   const { logout, user } = useAuth();
@@ -40,10 +41,12 @@ export default function Sidebar() {
     logout();
   };
 
+  const [openPostModal, setOpenPostModal] = useState(false);
+  const lastFocusedRef = useRef(null);
+
   return (
     <>
       <div className="sidebarFull">
-        {/* Full screen size */}
         <NavLink
           to="/home"
           end
@@ -62,12 +65,39 @@ export default function Sidebar() {
           <MenuIcon />
           <span>Settings</span>
         </div>
-        <div className="postButtonFull">
+        <button
+          className="postButtonFull"
+          onClick={(e) => {
+            // store the previously focused element and blur the button to avoid aria-hidden focus issue
+            lastFocusedRef.current = document.activeElement;
+            try {
+              e.currentTarget.blur();
+            } catch (err) {}
+            setOpenPostModal(true);
+          }}
+          type="button"
+          style={{ border: "none" }}
+        >
           <div>
             <CreateIcon />
           </div>
           <span>Post</span>
-        </div>
+        </button>
+        <PostModal
+          open={openPostModal}
+          onClose={() => {
+            setOpenPostModal(false);
+            // restore focus to previously focused element for accessibility
+            try {
+              if (
+                lastFocusedRef.current &&
+                typeof lastFocusedRef.current.focus === "function"
+              ) {
+                lastFocusedRef.current.focus();
+              }
+            } catch (err) {}
+          }}
+        />
         <Popover.Root>
           <Popover.Trigger className="profileFull sidebarButtonFull">
             <div className="profilePic">

@@ -7,8 +7,11 @@ let router = Router();
 // create post
 router.post("/user/post", verifyToken, controllers.postController.createPost);
 
-// get posts
+// get posts for feed
 // Need to input pagination
 router.get("/posts", verifyToken, controllers.postController.getPosts);
+
+// single post view
+router.get("/post/:postId", verifyToken, controllers.postController.getPost);
 
 export default router;

@@ -1,7 +1,12 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-export const postSchema = new Schema({
+export const commentSchema = new Schema({
+  postId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "post",
+  },
   userId: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -11,19 +16,10 @@ export const postSchema = new Schema({
     type: String,
     required: true,
   },
-  likes: {
-    type: Number,
-    default: 0,
-  },
-  commentsCount: {
-    type: Number,
-    default: 0,
-  },
-
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
 
-export const Post = mongoose.model("post", postSchema);
+export const Comment = mongoose.model("comment", commentSchema);

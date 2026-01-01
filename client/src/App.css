@@ -222,13 +222,19 @@ main {
   justify-content: flex-end;
   align-items: center;
   gap: 5px;
+  font-size: 13px;
 }
 .likeButton {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2px;
-
+  gap: 5px;
+}
+.commentButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }
 /* .like {
   display: flex;
@@ -251,12 +257,126 @@ main {
   border-bottom: 1px solid #2f3336;
   padding: 16px;
 }
+
+/* Single Post Page */
+.postPage {
+  /* padding: 16px; */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.postMain {
+  width: 100%;
+}
+.postSidebar {
+  width: 100%;
+  position: relative;
+}
+.postSidebar .postCard {
+  position: sticky;
+  top: 80px;
+}
+.postSidebar .commentsList {
+  max-height: 60vh;
+  overflow: auto;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.postStats {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 8px;
+  color: #e7e9ea;
+  font-weight: 600;
+}
+.postHeader {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.postHeader div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.postHeader span {
+  font-size: 13px;
+  color: #71767b;
+}
+.postHeader img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.postCard p {
+  color: #e7e9ea;
+  font-size: 16px;
+  line-height: 22px;
+  margin: 8px 0 12px 0;
+}
+.postStats {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: #71767b;
+}
+
+.commentsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.commentForm {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 12px;
+  border: 1px solid #2f3336;
+  border-radius: 100px;
+  margin: 10px;
+}
+.commentForm input {
+  background: transparent;
+  border: 0;
+  outline: none;
+  color: #e7e9ea;
+  font-size: 15px;
+}
+.commentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.commentItem {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px;
+  /* border-radius: 8px; */
+  border: 1px solid #2f3336;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+.commentItem img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+.commentItem strong { color: #e7e9ea }
+.commentItem small {  font-size: 13px;
+  color: #71767b; }
+
 /* Text field styling */
 .postInner .MuiInputBase-input {
   color: #e7e9ea;
   font-size: 20px;
   line-height: 24px; 
-  padding-bottom: 12px;
 }
 /* button styling */
 .postInner .MuiButton-root:disabled {
