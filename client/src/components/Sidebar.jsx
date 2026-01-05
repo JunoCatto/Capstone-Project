@@ -57,10 +57,17 @@ export default function Sidebar() {
           <HomeIcon />
           <span>Home</span>
         </NavLink>
-        <div className="sidebarButtonFull">
+        <NavLink
+          to="/profile"
+          end
+          className={({ isActive }) =>
+            `sidebarButtonFull ${isActive ? "active" : ""}`
+          }
+        >
           <PersonIcon />
           <span>Profile</span>
-        </div>
+        </NavLink>
+
         <div className="sidebarButtonFull">
           <MenuIcon />
           <span>Settings</span>
@@ -107,20 +114,24 @@ export default function Sidebar() {
             </div>
           </Popover.Trigger>
           <Popover.Portal>
-            <Popover.Positioner sideOffset={8}>
+            <Popover.Positioner sideOffset={12}>
               <Popover.Popup className="popup">
                 <Popover.Arrow className="Arrow">
                   <ArrowSvg />
                 </Popover.Arrow>
-                <Popover.Title className="popupTitle">test title</Popover.Title>
-                <Popover.Description className="popupDesc">
-                  <button
-                    className="signOut sidebarButtonFull"
-                    onClick={handleLogout}
-                  >
-                    Sign Out
-                  </button>
-                </Popover.Description>
+                <div className="popoverContent">
+                  <Popover.Title className="popupTitle">
+                    {user.userName}
+                  </Popover.Title>
+                  <Popover.Description className="popupDesc">
+                    <button
+                      className="signOut sidebarButtonFull"
+                      onClick={handleLogout}
+                    >
+                      Sign Out
+                    </button>
+                  </Popover.Description>
+                </div>
               </Popover.Popup>
             </Popover.Positioner>
           </Popover.Portal>

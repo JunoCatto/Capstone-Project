@@ -13,4 +13,12 @@ router.get("/user/:id", verifyToken, controllers.userController.findUserById);
 router.get("/user", verifyToken, controllers.userController.findAllUsers);
 
 router.get("/user/:id/pic", controllers.userController.findUserProfilePic);
+
+// update profile picture
+router.put(
+  "/user/:id/pic",
+  verifyToken,
+  controllers.userController.updateProfilePic
+);
+
 export default router;

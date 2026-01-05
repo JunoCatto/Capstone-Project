@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth.jsx";
 import { getPost, getComments, createComment } from "../api/posts.js";
 import { profilePicUrl, getProfilePic } from "../utils/imageHelper.js";
-
+import LikeButton from "../components/LikeButton.jsx";
+import CommentButton from "../components/CommentButton.jsx";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
@@ -64,7 +65,7 @@ export default function Post() {
 
   return (
     <div className="postPage">
-      <div className="postCard" style={{ margin: "10px" }}>
+      <div className="postCard" style={{ margin: "16px" }}>
         <div className="postHeader">
           <img src={profilePicUrl(post.userId._id)} alt="pfp" />
           <div>
@@ -75,9 +76,18 @@ export default function Post() {
           </div>
         </div>
         <p style={{ whiteSpace: "pre-wrap" }}>{post.content}</p>
-        <div className="postStats">
-          <span>{post.likes} likes</span>
-          <span>{post.commentsCount ?? 0} comments</span>
+        <div className="feedLowerDiv">
+          <span className="feedStats">
+            <CommentButton initialComments={post.commentsCount} />
+          </span>
+          <span className="feedStats">
+            {" "}
+            <LikeButton
+              postId={post._id}
+              initialLikes={post.likes}
+              initialLiked={post.liked}
+            />
+          </span>
         </div>
       </div>
 
@@ -109,9 +119,11 @@ export default function Post() {
           <div className="mainPostButton">
             <Button
               type="submit"
+              disabled={!text.trim()}
               sx={{
                 px: "12px !important",
                 py: "4px !important",
+                textTransform: "none",
               }}
             >
               Reply
@@ -120,8 +132,10 @@ export default function Post() {
         </form>
       </div>
 
-      <div className="commentsList">
-        {comments.length === 0 && <div>No comments yet</div>}
+      <div className="feed">
+        {comments.length === 0 && (
+          <div className="noComments">No comments yet</div>
+        )}
         {comments.map((c) => {
           const commentDate = new Date(c.createdAt);
           const cdate = commentDate.toLocaleDateString("en-UK", {
@@ -134,14 +148,28 @@ export default function Post() {
             hour12: true,
           });
           return (
-            <div key={c._id} className="commentItem">
-              <img src={profilePicUrl(c.userId._id)} alt="pfp" />
-              <div>
-                <strong>{c.userId.userName}</strong>
-                <div style={{ whiteSpace: "pre-wrap" }}>{c.content}</div>
-                <small>
-                  {cdate} | {ctime}
-                </small>
+            <div key={c._id} className="feedPosts">
+              <div
+                className="feedInnerDiv"
+                style={{
+                  cursor: "default",
+                  borderTop: "1px solid #2f3336",
+                  borderBottom: "0px",
+                }}
+              >
+                <div className="feedHeader">
+                  <div className="feedPfp">
+                    <img src={profilePicUrl(c.userId._id)} alt="pfp" />
+                  </div>
+                  <h4>{c.userId.userName}</h4>
+                  <span>
+                    {cdate} | {ctime}
+                  </span>
+                </div>
+                <p style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+                  {/* pre-wrap to preserve line breaks, wordBreak to break words */}
+                  {c.content}
+                </p>
               </div>
             </div>
           );

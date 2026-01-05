@@ -103,16 +103,14 @@ export const loginUser = async (req, res) => {
       process.env.JWT_SECRET || "secret",
       { expiresIn: "7d" }
     );
-    res
-      .status(200)
-      .json({
-        data: {
-          _id: user._id,
-          userName: user.userName,
-          profilePic: user.profilePic,
-        },
-        token,
-      });
+    res.status(200).json({
+      data: {
+        _id: user._id,
+        userName: user.userName,
+        profilePic: user.profilePic,
+      },
+      token,
+    });
     console.log(`User ${userName} signed in successfully`);
   } catch (err) {
     console.error("Error logging in user", err);
@@ -164,10 +162,50 @@ export const findUserProfilePic = async (req, res) => {
   }
 };
 
+// update profile picture -> PUT /api/user/:id/pic
+export const updateProfilePic = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const requester = req.user;
+    // Only allow the user to update their own pic
+    if (!requester || (requester._id !== id && requester._id !== String(id))) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+
+    const { data, contentType } = req.body;
+    if (!data || !contentType) {
+      return res
+        .status(400)
+        .json({ message: "Missing image data or contentType" });
+    }
+    if (!contentType.startsWith("image/")) {
+      return res.status(400).json({ message: "Invalid content type" });
+    }
+
+    const user = await Models.User.findById(id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    // convert base64 to buffer
+    const buffer = Buffer.from(data, "base64");
+    user.profilePic = { data: buffer, contentType };
+    user.updatedAt = Date.now();
+    await user.save();
+
+    // return updated user (toJSON will convert buffer to base64)
+    res.status(200).json({ data: user });
+  } catch (err) {
+    console.error("Error updating profile pic", err);
+    res
+      .status(500)
+      .json({ message: "Failed to update profile pic", error: err.message });
+  }
+};
+
 export default {
   createUser,
   loginUser,
   findUserById,
   findAllUsers,
   findUserProfilePic,
+  updateProfilePic,
 };

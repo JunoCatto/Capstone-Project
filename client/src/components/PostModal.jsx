@@ -24,9 +24,10 @@ export default function PostModal({ open, onClose, onPosted }) {
       onClose={onClose}
       fullWidth
       sx={{
-        background: "rgba(0, 0, 0, 0.5)",
+        background: "rgba(56, 56, 56, 0.5)",
         "& .MuiPaper-root": {
           background: "#000",
+          borderRadius: "20px",
         },
         "& .MuiBackdrop-root": {
           backgroundColor: "transparent",
@@ -47,11 +48,10 @@ export default function PostModal({ open, onClose, onPosted }) {
       }}
     >
       <DialogTitle>
-        Create Post
         <IconButton
           aria-label="close"
           onClick={onClose}
-          sx={{ position: "absolute", left: 8, top: 8, color: "white" }}
+          sx={{ position: "absolute", right: 8, top: 8, color: "white" }}
         >
           <CloseIcon />
         </IconButton>

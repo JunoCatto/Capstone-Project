@@ -45,12 +45,16 @@ export default function Feed({ posts, loading, error }) {
                 {post.content}
               </p>
               <div className="feedLowerDiv">
-                <CommentButton initialComments={post.commentsCount} />
-                <LikeButton
-                  postId={post._id}
-                  initialLikes={post.likes}
-                  initialLiked={post.liked}
-                />
+                <span className="feedStats">
+                  <CommentButton initialComments={post.commentsCount} />
+                </span>
+                <span className="feedStats">
+                  <LikeButton
+                    postId={post._id}
+                    initialLikes={post.likes}
+                    initialLiked={post.liked}
+                  />
+                </span>
               </div>
             </div>
           </div>

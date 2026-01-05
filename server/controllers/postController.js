@@ -73,7 +73,6 @@ export const getPost = async (req, res) => {
   try {
     const userId = req.user && req.user._id;
     const { postId } = req.params;
-    console.log(`[GET] /post/${postId}`, { userId });
     const post = await Models.Post.findById(postId).populate(
       "userId",
       "userName"

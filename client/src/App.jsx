@@ -11,6 +11,7 @@ import Home from "./pages/Home.jsx";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import Post from "./pages/Post.jsx";
+import Profile from "./pages/Profile.jsx";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route element={<AppLayout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/post/:id" element={<Post />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
       </Route>
     </Routes>
