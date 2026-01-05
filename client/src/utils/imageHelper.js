@@ -19,6 +19,6 @@ export const getProfilePic = (profilePic) => {
 };
 // Profile pictures for feed
 export const profilePicUrl = (userId) => {
-  const baseUrl = "http://localhost:5000/api";
+  const baseUrl = "/api";
   return `${baseUrl}/user/${userId}/pic`;
 };

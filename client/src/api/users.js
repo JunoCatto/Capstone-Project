@@ -1,8 +1,6 @@
-const baseUrl = "http://localhost:5000/api";
-
 export const getUser = async (userId, user) => {
   try {
-    const response = await fetch(`${baseUrl}/user/${userId}`, {
+    const response = await fetch(`/api/user/${userId}`, {
       headers: { Authorization: `Bearer ${user.token}` },
     });
     const data = await response.json();
@@ -28,7 +26,7 @@ export const uploadProfilePic = async (userId, file, user) => {
     const base64 = await toBase64(file);
     const contentType = file.type || "image/png";
 
-    const response = await fetch(`${baseUrl}/user/${userId}/pic`, {
+    const response = await fetch(`/api/user/${userId}/pic`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${user.token}`,

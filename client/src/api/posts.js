@@ -1,9 +1,7 @@
-const baseUrl = "http://localhost:5000/api";
-
 // Posts
 export const createPost = async (content, user) => {
   try {
-    const response = await fetch(`${baseUrl}/user/post`, {
+    const response = await fetch(`/api/user/post`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -23,7 +21,7 @@ export const createPost = async (content, user) => {
 };
 export const getPosts = async (user) => {
   try {
-    const response = await fetch(`${baseUrl}/posts`, {
+    const response = await fetch(`/api/posts`, {
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -42,7 +40,7 @@ export const getPosts = async (user) => {
 // Likes
 export const likePost = async (postId, user) => {
   try {
-    const response = await fetch(`${baseUrl}/post/${postId}/like`, {
+    const response = await fetch(`/api/post/${postId}/like`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -65,7 +63,7 @@ export const likePost = async (postId, user) => {
 
 export const getPost = async (postId, user) => {
   try {
-    const response = await fetch(`${baseUrl}/post/${postId}`, {
+    const response = await fetch(`/api/post/${postId}`, {
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -82,7 +80,7 @@ export const getPost = async (postId, user) => {
 export const getComments = async (postId, user, page = 1, limit = 20) => {
   try {
     const response = await fetch(
-      `http://localhost:5000/api/post/${postId}/comments?page=${page}&limit=${limit}`,
+      `/api/post/${postId}/comments?page=${page}&limit=${limit}`,
       {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -100,17 +98,14 @@ export const getComments = async (postId, user, page = 1, limit = 20) => {
 
 export const createComment = async (postId, content, user) => {
   try {
-    const response = await fetch(
-      `http://localhost:5000/api/post/${postId}/comment`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ content }),
-      }
-    );
+    const response = await fetch(`/api/post/${postId}/comment`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ content }),
+    });
     const data = await response.json();
     if (!response.ok) throw new Error(data.message);
     return data.data;
