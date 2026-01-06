@@ -4,7 +4,7 @@ import { useAuth } from "../hooks/useAuth.jsx";
 import { getPost, getComments, createComment } from "../api/posts.js";
 import { profilePicUrl, getProfilePic } from "../utils/imageHelper.js";
 import LikeButton from "../components/LikeButton.jsx";
-// import CommentButton from "../components/CommentButton.jsx";
+import CommentButton from "../components/CommentButton.jsx";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
@@ -78,7 +78,7 @@ export default function Post() {
         <p style={{ whiteSpace: "pre-wrap" }}>{post.content}</p>
         <div className="feedLowerDiv">
           <span className="feedStats">
-            {/* <CommentButton initialComments={post.commentsCount} /> */}
+            <CommentButton initialComments={post.commentsCount} />
           </span>
           <span className="feedStats">
             {" "}
