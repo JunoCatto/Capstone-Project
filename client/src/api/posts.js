@@ -9,10 +9,10 @@ export const createPost = async (content, user) => {
       },
       body: JSON.stringify({ content }),
     });
-    const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message);
+      throw new Error(await response.text());
     }
+    const data = await response.json();
     return data.data;
   } catch (err) {
     console.error("Error creating post", err);
@@ -26,11 +26,20 @@ export const getPosts = async (user) => {
         Authorization: `Bearer ${user.token}`,
       },
     });
-    const data = await response.json();
+    // If the response is not OK, read as text
     if (!response.ok) {
-      throw new Error(data.message);
+      let errorMsg;
+      try {
+        const errData = await response.clone().json();
+        errorMsg = errData.message || JSON.stringify(errData);
+      } catch {
+        // Fallback to text
+        errorMsg = await response.text();
+      }
+      throw new Error(`Failed to fetch posts: ${errorMsg}`);
     }
-    return data;
+    const data = await response.json();
+    return data.data || data; // depends on backend shape
   } catch (err) {
     console.error("Error getting posts", err);
     throw err;
@@ -50,10 +59,10 @@ export const likePost = async (postId, user) => {
         userId: user._id,
       }),
     });
-    const data = await response.json();
     if (!response.ok) {
       throw new Error(data.message);
     }
+    const data = await response.json();
     return data;
   } catch (err) {
     console.error("Error liking post", err);
@@ -68,8 +77,8 @@ export const getPost = async (postId, user) => {
         Authorization: `Bearer ${user.token}`,
       },
     });
-    const data = await response.json();
     if (!response.ok) throw new Error(data.message);
+    const data = await response.json();
     return data.data;
   } catch (err) {
     console.error("Error getting post", err);
@@ -87,8 +96,8 @@ export const getComments = async (postId, user, page = 1, limit = 20) => {
         },
       }
     );
-    const data = await response.json();
     if (!response.ok) throw new Error(data.message);
+    const data = await response.json();
     return data.data;
   } catch (err) {
     console.error("Error getting comments", err);
@@ -106,8 +115,8 @@ export const createComment = async (postId, content, user) => {
       },
       body: JSON.stringify({ content }),
     });
-    const data = await response.json();
     if (!response.ok) throw new Error(data.message);
+    const data = await response.json();
     return data.data;
   } catch (err) {
     console.error("Error creating comment", err);

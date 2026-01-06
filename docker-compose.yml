@@ -14,22 +14,19 @@ services:
     restart: unless-stopped
     environment:
       - MONGODB_URI=mongodb://mongo:27017/capstone_db
-      - CLIENT_URL=http://localhost:3000
       - PORT=5000
-    ports:
-      - "5000:5000"
+    expose:
+      - "5000"
     depends_on:
       - mongo
 
-  client: 
+  nginx:
     build:
-      context: ./client
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: nginx/Dockerfile
     restart: unless-stopped
-    environment:
-      - VITE_API_URL=http://server:5000
     ports:
-      - "3000:3000"
+      - "80:80"
     depends_on:
       - server
 volumes:
