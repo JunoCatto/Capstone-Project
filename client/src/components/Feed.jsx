@@ -2,7 +2,7 @@ import { profilePicUrl } from "../utils/imageHelper";
 import { useNavigate } from "react-router-dom";
 // Icons
 import LikeButton from "./LikeButton.jsx";
-import CommentButton from "./CommentButton.jsx";
+// import CommentButton from "./CommentButton.jsx";
 
 export default function Feed({ posts, loading, error }) {
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ export default function Feed({ posts, loading, error }) {
               </p>
               <div className="feedLowerDiv">
                 <span className="feedStats">
-                  <CommentButton initialComments={post.commentsCount} />
+                  {/* <CommentButton initialComments={post.commentsCount} /> */}
                 </span>
                 <span className="feedStats">
                   <LikeButton
