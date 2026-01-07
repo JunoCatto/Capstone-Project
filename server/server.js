@@ -16,7 +16,6 @@ app.get("/", (req, res) => {
 
 // middlewares - routing - /api/*
 app.use(express.json());
-app.use(express.static(path.join(process.cwd(), "client/dist")));
 import routes from "./routes/index.js";
 app.use("/api", routes);
 
