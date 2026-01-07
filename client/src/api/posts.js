@@ -1,7 +1,9 @@
+const API_URL = import.meta.env.VITE_API_URL || "/api";
+
 // Posts
 export const createPost = async (content, user) => {
   try {
-    const response = await fetch(`/api/user/post`, {
+    const response = await fetch(`${API_URL}/user/post`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -21,7 +23,7 @@ export const createPost = async (content, user) => {
 };
 export const getPosts = async (user) => {
   try {
-    const response = await fetch(`/api/posts`, {
+    const response = await fetch(`${API_URL}/posts`, {
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -49,7 +51,7 @@ export const getPosts = async (user) => {
 // Likes
 export const likePost = async (postId, user) => {
   try {
-    const response = await fetch(`/api/post/${postId}/like`, {
+    const response = await fetch(`${API_URL}/post/${postId}/like`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -72,7 +74,7 @@ export const likePost = async (postId, user) => {
 
 export const getPost = async (postId, user) => {
   try {
-    const response = await fetch(`/api/post/${postId}`, {
+    const response = await fetch(`${API_URL}/post/${postId}`, {
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -89,7 +91,7 @@ export const getPost = async (postId, user) => {
 export const getComments = async (postId, user, page = 1, limit = 20) => {
   try {
     const response = await fetch(
-      `/api/post/${postId}/comments?page=${page}&limit=${limit}`,
+      `${API_URL}/post/${postId}/comments?page=${page}&limit=${limit}`,
       {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -107,7 +109,7 @@ export const getComments = async (postId, user, page = 1, limit = 20) => {
 
 export const createComment = async (postId, content, user) => {
   try {
-    const response = await fetch(`/api/post/${postId}/comment`, {
+    const response = await fetch(`${API_URL}/post/${postId}/comment`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${user.token}`,
