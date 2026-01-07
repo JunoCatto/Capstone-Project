@@ -31,7 +31,6 @@ export const AuthProvider = ({ children }) => {
         profilePic: data.data.profilePic,
         token: data.token,
       };
-      console.log(data.data);
       dispatch({ type: "AUTH_SUCCESS", payload: flatUser });
       localStorage.setItem("user", JSON.stringify(flatUser));
       return { success: true };
