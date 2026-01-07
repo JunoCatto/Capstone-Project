@@ -21,10 +21,10 @@ export const AuthProvider = ({ children }) => {
           password,
         }),
       });
+      const data = await response.json();
       if (!response.ok) {
         throw new Error(data.message);
       }
-      const data = await response.json();
       const flatUser = {
         _id: data.data._id,
         userName: data.data.userName,
@@ -54,10 +54,10 @@ export const AuthProvider = ({ children }) => {
           password,
         }),
       });
+      const data = await response.json();
       if (!response.ok) {
         throw new Error(data.message);
       }
-      const data = await response.json();
       dispatch({
         type: "AUTH_START",
         payload: null,
