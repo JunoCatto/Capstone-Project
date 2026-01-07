@@ -6,8 +6,10 @@ RUN npm install
 COPY client/ ./
 RUN npm run build
 
+
 # Nginx
 FROM nginx:alpine
+RUN apk add --no-cache ca-certificates
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/dist /usr/share/nginx/html
 EXPOSE 80
