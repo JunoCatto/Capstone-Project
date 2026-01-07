@@ -1,10 +1,11 @@
+const API_URL = import.meta.env.VITE_API_URL || "/api";
 export const getUser = async (userId, user) => {
   try {
-    const response = await fetch(`/api/user/${userId}`, {
+    const response = await fetch(`${API_URL}/user/${userId}`, {
       headers: { Authorization: `Bearer ${user.token}` },
     });
-    const data = await response.json();
     if (!response.ok) throw new Error(data.message || "Failed to get user");
+    const data = await response.json();
     return data.data;
   } catch (err) {
     console.error("Error getting user", err);
@@ -26,7 +27,7 @@ export const uploadProfilePic = async (userId, file, user) => {
     const base64 = await toBase64(file);
     const contentType = file.type || "image/png";
 
-    const response = await fetch(`/api/user/${userId}/pic`, {
+    const response = await fetch(`${API_URL}/user/${userId}/pic`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -34,8 +35,8 @@ export const uploadProfilePic = async (userId, file, user) => {
       },
       body: JSON.stringify({ data: base64, contentType }),
     });
-    const data = await response.json();
     if (!response.ok) throw new Error(data.message || "Failed to upload");
+    const data = await response.json();
     return data.data;
   } catch (err) {
     console.error("Error uploading profile pic", err);
