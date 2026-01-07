@@ -2,6 +2,7 @@ import { createContext, useReducer } from "react";
 import { authReducer, initialState } from "../reducers/authReducer";
 
 export const AuthContext = createContext(null);
+const API_URL = import.meta.env.VITE_API_URL || "/api";
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -10,7 +11,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (userName, password) => {
     dispatch({ type: "AUTH_START" });
     try {
-      const response = await fetch("/api/auth/login", {
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -20,10 +21,10 @@ export const AuthProvider = ({ children }) => {
           password,
         }),
       });
-      const data = await response.json();
       if (!response.ok) {
         throw new Error(data.message);
       }
+      const data = await response.json();
       const flatUser = {
         _id: data.data._id,
         userName: data.data.userName,
@@ -43,7 +44,7 @@ export const AuthProvider = ({ children }) => {
   // register function
   const register = async (userName, password) => {
     try {
-      const response = await fetch("/api/auth/register", {
+      const response = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,10 +54,10 @@ export const AuthProvider = ({ children }) => {
           password,
         }),
       });
-      const data = await response.json();
       if (!response.ok) {
         throw new Error(data.message);
       }
+      const data = await response.json();
       dispatch({
         type: "AUTH_START",
         payload: null,
