@@ -1,3 +1,4 @@
+const API_URL = import.meta.env.VITE_API_URL;
 // Gets from base64 of user schema
 export const getProfilePic = (profilePic) => {
   if (!profilePic || !profilePic.data) {
@@ -19,6 +20,5 @@ export const getProfilePic = (profilePic) => {
 };
 // Profile pictures for feed
 export const profilePicUrl = (userId) => {
-  const baseUrl = "/api";
-  return `${baseUrl}/user/${userId}/pic`;
+  return `${API_URL}/user/${userId}/pic`;
 };

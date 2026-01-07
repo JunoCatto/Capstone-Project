@@ -2,7 +2,7 @@ import { createContext, useReducer } from "react";
 import { authReducer, initialState } from "../reducers/authReducer";
 
 export const AuthContext = createContext(null);
-const API_URL = import.meta.env.VITE_API_URL || "/api";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   // login function
   const login = async (userName, password) => {
     dispatch({ type: "AUTH_START" });
+    console.log(API_URL);
     try {
       const response = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
