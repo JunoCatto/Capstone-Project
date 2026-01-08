@@ -1,5 +1,7 @@
 import { profilePicUrl } from "../utils/imageHelper";
 import { useNavigate } from "react-router-dom";
+// mui loading spinner
+import CircularProgress from "@mui/material/CircularProgress";
 // Icons
 import LikeButton from "./LikeButton.jsx";
 import CommentButton from "./CommentButton.jsx";
@@ -7,7 +9,12 @@ import CommentButton from "./CommentButton.jsx";
 export default function Feed({ posts, loading, error }) {
   const navigate = useNavigate();
   // add loading ring
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div className="loading">
+        <CircularProgress />
+      </div>
+    );
   if (error) return <p>Error: {error.message}</p>;
 
   return (
