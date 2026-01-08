@@ -20,10 +20,10 @@ function generateToken() {
 
 // Start in-memory MongoDB before all tests
 beforeAll(async () => {
-  mongo = await MongoMemoryServer.create();
+  mongo = await MongoMemoryServer.create({ binary: { version: "6.0.0" } });
   const uri = mongo.getUri();
   await mongoose.connect(uri);
-});
+}, 60000);
 
 // Clean up database before each test
 beforeEach(async () => {

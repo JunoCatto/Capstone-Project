@@ -35,6 +35,6 @@ jobs:
           npm ci
           npm run test
 
-      # Run server tests within docker
+      # Build docker image and run server tests
       - name: Run server tests
         run: docker compose -f docker-compose.yml run server npm run test
