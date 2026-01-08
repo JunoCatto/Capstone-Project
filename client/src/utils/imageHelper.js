@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 // Gets from base64 of user schema
 export const getProfilePic = (profilePic) => {
   if (!profilePic || !profilePic.data) {

@@ -1,12 +1,12 @@
 # Capstone-Project
 
-A full stack social media web application built with React, Node.js/Express, and MongoDB. This application mirrors the functionality and design of Twitter as a learning project.
+A simple full stack social media web application built with React, Node.js/Express, and MongoDB. This application mirrors the functionality and design of Twitter as a learning project.
 
 This project was developed as part of a Capstone Project for a Web Development course.
 
 ## Overview
 
-The project is a full stack application that allows users to create accounts, post content, like posts, and comment on posts.
+The project is a full stack application that allows users to create accounts, post text-based content, and like/comment on posts.
 
 ## Features
 
@@ -73,6 +73,7 @@ http://localhost:5000 # Backend
 
 ## Possible future improvements
 
+- Add the ability to remove/edit posts
 - Add the ability to follow other users
 - Add a search bar to the feed to find user's posts
 - Fix user profile pictures, as right now if the file is too large it won't upload.

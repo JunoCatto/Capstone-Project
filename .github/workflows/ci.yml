@@ -14,14 +14,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      # Install Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
       # Docker install
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
 
-      # Login to Docker Hub
-
-      # Build docker image
+      # Build server docker image
       - name: Build Docker Compose
         run: docker compose -f docker-compose.yml build --no-cache
 
-      # Push to dockerhub
+      # Run client tests
+      - name: Run client tests
+        run: cd client
+          npm ci
+          npm run test
+
+      # Run server tests within docker
+      - name: Run server tests
+        run: docker compose -f docker-compose.yml run server npm run test

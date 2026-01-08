@@ -6,7 +6,7 @@ export const createPost = async (req, res) => {
     const userId = req.user._id;
 
     // Error handling
-    if (!userId || !content) {
+    if (!userId || typeof content !== "string") {
       return res.status(400).json({ message: "user and content are required" });
     }
     if (content.trim().length === 0) {

@@ -2,7 +2,7 @@ import { createContext, useReducer } from "react";
 import { authReducer, initialState } from "../reducers/authReducer";
 
 export const AuthContext = createContext(null);
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
