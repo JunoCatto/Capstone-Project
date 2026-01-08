@@ -30,7 +30,8 @@ jobs:
 
       # Run client tests
       - name: Run client tests
-        run: cd client
+        run: |
+          cd client
           npm ci
           npm run test
 
