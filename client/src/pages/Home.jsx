@@ -2,6 +2,7 @@ import Feed from "../components/Feed.jsx";
 import PostInput from "../components/PostInput.jsx";
 import { useState, useEffect } from "react";
 import { getPosts } from "../api/posts.js";
+import { deletePost } from "../api/posts.js";
 import { useAuth } from "../hooks/useAuth.jsx";
 
 export default function Home() {
@@ -28,6 +29,11 @@ export default function Home() {
     setPosts((prevPosts) => [newPost, ...prevPosts]);
   };
 
+  const deletePostHandler = async (postId) => {
+    await deletePost(postId, user);
+    setPosts((prevPosts) => prevPosts.filter((p) => p._id !== postId));
+  };
+
   // Listen for posts created elsewhere (e.g. PostModal from Sidebar)
   useEffect(() => {
     const handler = (e) => {
@@ -41,7 +47,12 @@ export default function Home() {
   return (
     <div className="feedPosts">
       <PostInput addImmediately={addImmediately} />
-      <Feed posts={posts} loading={loading} error={error} />
+      <Feed
+        posts={posts}
+        loading={loading}
+        error={error}
+        deletePostHandler={deletePostHandler}
+      />
     </div>
   );
 }

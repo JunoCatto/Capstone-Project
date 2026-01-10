@@ -39,6 +39,46 @@ export const createPost = async (req, res) => {
   }
 };
 
+// delete post
+export const deletePost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const userId = req.user._id;
+    const post = await Models.Post.findById(postId);
+    if (!post) return res.status(404).json({ message: "Post not found" });
+    if (post.userId._id.toString() !== userId)
+      return res.status(403).json({ message: "Forbidden" });
+    await post.deleteOne();
+    res.status(200).json({ message: "Post deleted" });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Failed to delete post", error: err.message });
+  }
+};
+
+// edit post - updates the content of post with id postId
+export const updatePost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const userId = req.user._id;
+    const post = await Models.Post.findById(postId); // duplicated from above, can combine under one
+    if (!post) return res.status(404).json({ message: "Post not found" });
+    if (post.userId._id !== userId)
+      return res.status(403).json({ message: "Forbidden" });
+    const { content } = req.body; // payload string not json (refactor)
+    if (!content || typeof content !== "string")
+      return res.status(400).json({ message: "Content is required" });
+    post.content = content; // TODO - add updatedAt
+    await post.save();
+    res.status(200).json({ message: "Post updated" });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Failed to update post", error: err.message });
+  }
+};
+
 // find all posts for feed
 export const getPosts = async (req, res) => {
   try {
@@ -98,4 +138,6 @@ export default {
   createPost,
   getPosts,
   getPost,
+  deletePost,
+  updatePost,
 };

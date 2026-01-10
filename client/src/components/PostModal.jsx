@@ -62,3 +62,5 @@ export default function PostModal({ open, onClose, onPosted }) {
     </Dialog>
   );
 }
+
+// TODO - Can make PostModal into a single resuable component for editing posts too just need to figure out how

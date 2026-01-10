@@ -1,20 +1,19 @@
 import { profilePicUrl } from "../utils/imageHelper";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth.jsx";
 // mui loading spinner
-import CircularProgress from "@mui/material/CircularProgress";
+import LoadingSpinner from "./LoadingSpinner.jsx";
 // Icons
 import LikeButton from "./LikeButton.jsx";
 import CommentButton from "./CommentButton.jsx";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
-export default function Feed({ posts, loading, error }) {
+export default function Feed({ posts, loading, error, deletePostHandler }) {
   const navigate = useNavigate();
+  const { user } = useAuth();
   // add loading ring
-  if (loading)
-    return (
-      <div className="loading">
-        <CircularProgress />
-      </div>
-    );
+  if (loading) return <LoadingSpinner />;
   if (error) return <p>Error: {error.message}</p>;
 
   return (
@@ -31,13 +30,12 @@ export default function Feed({ posts, loading, error }) {
           hour12: true,
         });
         return (
-          <div
-            className="feedPosts"
-            key={post._id}
-            onClick={() => navigate(`/post/${post._id}`)}
-            style={{ cursor: "pointer" }}
-          >
-            <div className="feedInnerDiv">
+          <div className="feedPosts" key={post._id}>
+            <div
+              className="feedInnerDiv"
+              onClick={() => navigate(`/post/${post._id}`)}
+              style={{ cursor: "pointer" }}
+            >
               <div className="feedHeader">
                 <div className="feedPfp">
                   <img src={profilePicUrl(post.userId._id)}></img>
@@ -46,6 +44,19 @@ export default function Feed({ posts, loading, error }) {
                 <span>
                   {date} | {time}
                 </span>
+                {/* delete button that is only active if the user is the post author */}
+                {user._id === post.userId._id && (
+                  <DeleteIcon
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deletePostHandler(post._id);
+                    }}
+                  />
+                )}
+                {/* update button that is only active if the user is the post author */}
+                {user._id === post.userId._id && (
+                  <EditIcon onClick={(e) => e.stopPropagation()} />
+                )}
               </div>
               <p style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
                 {/* pre-wrap to preserve line breaks, wordBreak to break words */}

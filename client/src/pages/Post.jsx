@@ -7,6 +7,7 @@ import LikeButton from "../components/LikeButton.jsx";
 import CommentButton from "../components/CommentButton.jsx";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import LoadingSpinner from "../components/LoadingSpinner.jsx";
 
 export default function Post() {
   const { id } = useParams();
@@ -48,7 +49,7 @@ export default function Post() {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingSpinner />;
   if (error) return <p>Error: {error}</p>;
   if (!post) return <p>Post not found</p>;
 

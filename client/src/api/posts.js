@@ -21,6 +21,43 @@ export const createPost = async (content, user) => {
     throw err;
   }
 };
+
+export const deletePost = async (postId, user) => {
+  try {
+    const response = await fetch(`${API_URL}/user/post/${postId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    if (!response.ok) throw new Error(response.statusText);
+    const data = await response.json();
+    return data.data;
+  } catch (err) {
+    console.error("Error deleting post", err);
+    throw err;
+  }
+};
+
+export const updatePost = async (postId, content, user) => {
+  try {
+    const response = await fetch(`${API_URL}/post/${postId}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ content }),
+    });
+    if (!response.ok) throw new Error(data.message);
+    const data = await response.json();
+    return data.data;
+  } catch (err) {
+    console.error("Error updating post", err);
+    throw err;
+  }
+};
+
 export const getPosts = async (user) => {
   try {
     const response = await fetch(`${API_URL}/posts`, {
