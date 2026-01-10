@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== "test") {
 
 app.use(cors());
 
-// landing page
+// landing Page
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Running mongodb server" });
 });
@@ -22,6 +22,11 @@ app.use(express.json());
 import routes from "./routes/index.js";
 app.use("/api", routes);
 
+app.use(express.static(path.join(__dirname, "dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 // 404 error handler
 app.use((req, res) => {
   res.status(404).json({ message: "404 Page not found" });
