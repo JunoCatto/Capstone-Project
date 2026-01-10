@@ -3,6 +3,7 @@ import "dotenv/config";
 import mongoose from "./dbconnect.js";
 import cors from "cors";
 import { connectDB } from "./dbconnect.js";
+import path from "path";
 
 const app = express();
 
