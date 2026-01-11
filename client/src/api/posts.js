@@ -41,15 +41,15 @@ export const deletePost = async (postId, user) => {
 
 export const updatePost = async (postId, content, user) => {
   try {
-    const response = await fetch(`${API_URL}/post/${postId}`, {
-      method: "PUT",
+    const response = await fetch(`${API_URL}/user/post/${postId}`, {
+      method: "PATCH",
       headers: {
         Authorization: `Bearer ${user.token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ content }),
     });
-    if (!response.ok) throw new Error(data.message);
+    if (!response.ok) throw new Error(response.statusText);
     const data = await response.json();
     return data.data;
   } catch (err) {

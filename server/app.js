@@ -28,9 +28,9 @@ app.use("/api", routes);
 
 app.use(express.static(path.join(__dirname, "dist")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "dist", "index.html"));
+// });
 // 404 error handler
 app.use((req, res) => {
   res.status(404).json({ message: "404 Page not found" });

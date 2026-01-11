@@ -1,6 +1,8 @@
 import { profilePicUrl } from "../utils/imageHelper";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth.jsx";
+import { updatePost } from "../api/posts.js";
+import { useState } from "react";
 // mui loading spinner
 import LoadingSpinner from "./LoadingSpinner.jsx";
 // Icons
@@ -9,9 +11,17 @@ import CommentButton from "./CommentButton.jsx";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 
-export default function Feed({ posts, loading, error, deletePostHandler }) {
+export default function Feed({
+  posts,
+  loading,
+  error,
+  deletePostHandler,
+  handlePostUpdate,
+}) {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const [editingPostId, setEditingPostId] = useState(null);
+  const [editedContent, setEditedContent] = useState("");
   // add loading ring
   if (loading) return <LoadingSpinner />;
   if (error) return <p>Error: {error.message}</p>;
@@ -55,13 +65,55 @@ export default function Feed({ posts, loading, error, deletePostHandler }) {
                 )}
                 {/* update button that is only active if the user is the post author */}
                 {user._id === post.userId._id && (
-                  <EditIcon onClick={(e) => e.stopPropagation()} />
+                  <EditIcon
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setEditingPostId(post._id);
+                      setEditedContent(post.content);
+                    }}
+                  />
                 )}
               </div>
-              <p style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
-                {/* pre-wrap to preserve line breaks, wordBreak to break words */}
-                {post.content}
-              </p>
+              {editingPostId === post._id ? (
+                <>
+                  <textarea
+                    value={editedContent}
+                    onChange={(e) => setEditedContent(e.target.value)}
+                    onClick={(e) => e.stopPropagation()}
+                    style={{ width: "100%" }}
+                  />
+                  <div>
+                    <button
+                      onClick={async (e) => {
+                        e.stopPropagation();
+                        const updated = await updatePost(
+                          post._id,
+                          editedContent,
+                          user
+                        );
+                        handlePostUpdate(updated);
+                        setEditingPostId(null);
+                        setEditedContent("");
+                      }}
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setEditingPostId(null);
+                        setEditedContent("");
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <p style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+                  {post.content}
+                </p>
+              )}
               <div className="feedLowerDiv">
                 <span className="feedStats">
                   <CommentButton initialComments={post.commentsCount} />

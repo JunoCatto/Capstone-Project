@@ -34,6 +34,12 @@ export default function Home() {
     setPosts((prevPosts) => prevPosts.filter((p) => p._id !== postId));
   };
 
+  const handlePostUpdate = (updatedPost) => {
+    setPosts((prev) =>
+      prev.map((p) => (p._id === updatedPost._id ? updatedPost : p))
+    );
+  };
+
   // Listen for posts created elsewhere (e.g. PostModal from Sidebar)
   useEffect(() => {
     const handler = (e) => {
@@ -52,6 +58,7 @@ export default function Home() {
         loading={loading}
         error={error}
         deletePostHandler={deletePostHandler}
+        handlePostUpdate={handlePostUpdate}
       />
     </div>
   );

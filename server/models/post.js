@@ -24,6 +24,11 @@ export const postSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 export const Post = mongoose.model("post", postSchema);

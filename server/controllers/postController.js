@@ -46,7 +46,7 @@ export const deletePost = async (req, res) => {
     const userId = req.user._id;
     const post = await Models.Post.findById(postId);
     if (!post) return res.status(404).json({ message: "Post not found" });
-    if (post.userId._id.toString() !== userId)
+    if (post.userId.toString() !== userId)
       return res.status(403).json({ message: "Forbidden" });
     await post.deleteOne();
     res.status(200).json({ message: "Post deleted" });
@@ -62,16 +62,20 @@ export const updatePost = async (req, res) => {
   try {
     const { postId } = req.params;
     const userId = req.user._id;
-    const post = await Models.Post.findById(postId); // duplicated from above, can combine under one
+    const post = await Models.Post.findById(postId).populate(
+      "userId",
+      "userName"
+    ); // duplicated from above, can combine under one
     if (!post) return res.status(404).json({ message: "Post not found" });
-    if (post.userId._id !== userId)
+    if (post.userId._id.toString() !== userId)
       return res.status(403).json({ message: "Forbidden" });
     const { content } = req.body; // payload string not json (refactor)
     if (!content || typeof content !== "string")
       return res.status(400).json({ message: "Content is required" });
-    post.content = content; // TODO - add updatedAt
+    post.content = content;
+    post.updatedAt = new Date();
     await post.save();
-    res.status(200).json({ message: "Post updated" });
+    res.status(200).json({ data: post });
   } catch (err) {
     res
       .status(500)
