@@ -280,27 +280,26 @@ main {
   align-items: center;
   gap: 5px;
 }
+
+
 .commentButton {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 5px;
 }
-/* .like {
+.like{
   display: flex;
-  align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 100px;
-  top: 0;
+  align-items: center;
+  padding: 2px;
 }
 .like:hover {
-  background-color: #1a1b1b;
+  background-color: #2f3336;
+  border-radius: 100px;
+  
 }
-.like:active {
-  background-color: #2a2b2b;
-} */
+
 
 /* Post Input */ 
 .postDiv {
@@ -422,6 +421,9 @@ main {
   font-size: 15px;
 }
 
+.MuiInputBase-input {
+  color: #e7e9ea;
+}
 /* Text field styling */
 .postInner .MuiInputBase-input {
   color: #e7e9ea;

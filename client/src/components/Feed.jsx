@@ -5,6 +5,7 @@ import { updatePost } from "../api/posts.js";
 import { useState } from "react";
 // mui loading spinner
 import LoadingSpinner from "./LoadingSpinner.jsx";
+import TextField from "@mui/material/TextField";
 // Icons
 import LikeButton from "./LikeButton.jsx";
 import CommentButton from "./CommentButton.jsx";
@@ -55,32 +56,48 @@ export default function Feed({
                   {date} | {time}
                 </span>
                 {/* delete button that is only active if the user is the post author */}
-                {user._id === post.userId._id && (
-                  <DeleteIcon
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deletePostHandler(post._id);
-                    }}
-                  />
-                )}
+                <div className="like">
+                  {user._id === post.userId._id && (
+                    <DeleteIcon
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deletePostHandler(post._id);
+                      }}
+                    />
+                  )}
+                </div>
                 {/* update button that is only active if the user is the post author */}
-                {user._id === post.userId._id && (
-                  <EditIcon
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setEditingPostId(post._id);
-                      setEditedContent(post.content);
-                    }}
-                  />
-                )}
+                <div className="like">
+                  {user._id === post.userId._id && (
+                    <EditIcon
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setEditingPostId(post._id);
+                        setEditedContent(post.content);
+                      }}
+                    />
+                  )}
+                </div>
               </div>
               {editingPostId === post._id ? (
                 <>
-                  <textarea
+                  <TextField
                     value={editedContent}
+                    variant="standard"
                     onChange={(e) => setEditedContent(e.target.value)}
                     onClick={(e) => e.stopPropagation()}
-                    style={{ width: "100%" }}
+                    style={{ width: "100%", gap: "10px" }}
+                    sx={{
+                      "& .MuiInputBase-input": {
+                        color: "#e7e9ea",
+                        fontSize: "15px",
+                      },
+                    }}
+                    slotProps={{
+                      input: {
+                        disableUnderline: true,
+                      },
+                    }}
                   />
                   <div>
                     <button
